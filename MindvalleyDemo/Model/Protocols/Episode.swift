@@ -8,5 +8,5 @@
 import Foundation
 
 protocol Episode: Media {
-    var name: String { get }
+    var channel: String { get }
 }

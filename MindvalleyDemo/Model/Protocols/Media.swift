@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Media {
-    var mediaType: String { get }
-    var mediaTitle: String { get }
-    var mediaCoverPhoto: String { get }
+    var id: String { get }
+    var title: String { get }
+    var coverPhoto: String { get }
 }

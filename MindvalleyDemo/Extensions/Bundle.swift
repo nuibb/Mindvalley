@@ -21,7 +21,7 @@ extension Bundle {
     
     func decode<T: Decodable>(_ file: String, fileExtension: String) -> Swift.Result<T, RequestError> {
         guard let url = self.url(forResource: file, withExtension: fileExtension) else {
-            return .failure(.custom("Failed to locate \(file) in bundle."))
+            return .failure(.custom("Failed to locate \(file)\(fileExtension) in bundle."))
         }
         
         guard let data = try? Data(contentsOf: url) else {

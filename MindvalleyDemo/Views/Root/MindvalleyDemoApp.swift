@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+@available(iOS 14.0, *)
 struct MindvalleyDemoApp: App {
     init() {
         /// Defining server configuration domain on the current 'Schema' by the run time
@@ -23,3 +23,5 @@ struct MindvalleyDemoApp: App {
         }
     }
 }
+
+
