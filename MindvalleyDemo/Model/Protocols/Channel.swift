@@ -14,3 +14,11 @@ protocol Channel {
     var items: [Media] { get }
     var isSeries: Bool { get }
 }
+
+struct ChannelItem: Channel {
+    var channelId: String
+    var name: String
+    var icon: String
+    var items: [Media]
+    var isSeries: Bool
+}

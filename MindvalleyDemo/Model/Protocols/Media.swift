@@ -12,3 +12,9 @@ protocol Media {
     var title: String { get }
     var coverPhoto: String { get }
 }
+
+struct MediaItem: Media {
+    var id: String
+    var title: String
+    var coverPhoto: String
+}

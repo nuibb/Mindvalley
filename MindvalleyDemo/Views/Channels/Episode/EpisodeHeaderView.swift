@@ -18,5 +18,7 @@ struct EpisodeHeaderView: View {
             
             Spacer()
         }
+        .background(Color.backgroundColor)
+        .insensitiveTextCase()
     }
 }

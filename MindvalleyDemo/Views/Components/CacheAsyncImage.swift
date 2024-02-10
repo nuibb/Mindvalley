@@ -9,15 +9,48 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct CacheAsyncImage: View {
-    private let photoURL = URL(string: "https://picsum.photos/256")
+    let photoURL: String
+    let size: CGSize
+    
+    private let scale: CGFloat = 3.0
+    private let transaction = Transaction(animation: .spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.25))
 
     var body: some View {
-        AsyncImage(url: photoURL) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        } placeholder: {
-            ProgressView()
+        AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
+            switch phase {
+            case .success(let image):
+                image.imageModifier(width: size.width, height: size.height)
+            case .failure(_):
+                Image(systemName: Constants.failedPhaseIcon).iconModifier(width: size.width, height: size.height)
+            case .empty:
+                Image(systemName: Constants.emptyPhaseIcon).iconModifier(width: size.width, height: size.height)
+            @unknown default:
+                ProgressView()
+            }
+        }
+    }
+}
+
+@available(iOS 15.0, *)
+struct CacheAsyncIcon: View {
+    let photoURL: String
+    let size: CGSize
+    
+    private let scale: CGFloat = 3.0
+    private let transaction = Transaction(animation: .spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.25))
+
+    var body: some View {
+        AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
+            switch phase {
+            case .success(let image):
+                image.iconModifierFill(width: size.width, height: size.height)
+            case .failure(_):
+                Image(systemName: Constants.failedPhaseIcon).iconModifier(width: size.width, height: size.height)
+            case .empty:
+                Image(systemName: Constants.emptyPhaseIcon).iconModifier(width: size.width, height: size.height)
+            @unknown default:
+                ProgressView()
+            }
         }
     }
 }

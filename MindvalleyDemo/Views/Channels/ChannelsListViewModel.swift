@@ -12,8 +12,9 @@ final class ChannelsListViewModel: ObservableObject {
     @Published var messageColor: Color = MessageType.error.color
     @Published var isRequesting: Bool = false
     @Published var showToast: Bool = false
-    @Published var newEpisodes: [Episode] = []
-    @Published var channels: [Channel] = []
+    @Published var newEpisodes: [EpisodeItem] = [] /// TODO:  later explore with [Episode] using adapter as generic
+    @Published var channels: [ChannelItem] = [] /// TODO: later explore with [Channel] using adapter
+    @Published var categories: [CategoryItem] = []
     
     let dataProvider: ChannelsDataProvider
     var toastMessage: String = ""
@@ -22,26 +23,33 @@ final class ChannelsListViewModel: ObservableObject {
         self.dataProvider = dataProvider
         Utils.after(seconds: 1) { [weak self] in
             guard let self = self else { return }
+            self.isRequesting = true //TODO: explore async group later and make it false after fetching all
             self.fetchNewEpisodes()
             self.fetchChannels()
+            self.fetchCategories()
         }
     }
     
     func fetchNewEpisodes() {
-        self.isRequesting = true
-        
         Task { [weak self] in
             guard let self = self else { return }
             let response = await dataProvider.fetchNewEpisodes()
             if case .success(let result) = response {
-                Logger.log(type: .error, "[Response][Data]: \(result)")
+                Logger.log(type: .error, "[Episodes][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     let items = result.data?.mediaItems ?? []
-                    self?.newEpisodes = items.count < 6 ? items : Array(items.prefix(6))
+                    let filteredItems = items.count < 6 ? items : Array(items.prefix(6))
+                    self?.newEpisodes = filteredItems.map { item in
+                        return EpisodeItem(
+                            id: item.id,
+                            title: item.name,
+                            coverPhoto: item.coverAsset?.url ?? "",
+                            channel: item.mediaChannel?.title ?? "")
+                    }
                 }
             } else if case .failure(let error) = response {
-                Logger.log(type: .error, "[Request] failed: \(error.description)")
+                Logger.log(type: .error, "[Episodes][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     self?.displayMessage(error.description)
@@ -56,20 +64,53 @@ final class ChannelsListViewModel: ObservableObject {
     }
     
     func fetchChannels() {
-        self.isRequesting = true
-        
         Task { [weak self] in
             guard let self = self else { return }
             let response = await dataProvider.fetchChannels()
             if case .success(let result) = response {
-                Logger.log(type: .error, "[Response][Data]: \(result)")
+                Logger.log(type: .error, "[Channels][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    let items = result.rawData?.channels ?? []
-                    self?.channels = items.count < 6 ? items : Array(items.prefix(6))
+                    self?.channels = result.rawData?.channels.map { channel in
+                        return ChannelItem(
+                            channelId: channel.id,
+                            name: channel.title,
+                            icon: channel.iconAsset?.thumbnailUrl ?? channel.coverAsset?.url ?? "",
+                            items: !channel.series.isEmpty ? channel.series.map {
+                                MediaItem(id: $0.id, title: $0.name, coverPhoto: $0.coverAsset?.url ?? "")
+                            } : channel.latestMediaItems.map {
+                                MediaItem(id: $0.id, title: $0.name, coverPhoto: $0.coverAsset?.url ?? "")
+                            },
+                            isSeries: !channel.series.isEmpty)
+                    } ?? []
                 }
             } else if case .failure(let error) = response {
-                Logger.log(type: .error, "[Request] failed: \(error.description)")
+                Logger.log(type: .error, "[Channels][Request] failed: \(error.description)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.displayMessage(error.description)
+                }
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.displayMessage(RequestError.unknown.description)
+                }
+            }
+        }
+    }
+    
+    func fetchCategories() {
+        Task { [weak self] in
+            guard let self = self else { return }
+            let response = await dataProvider.fetchCategories()
+            if case .success(let result) = response {
+                Logger.log(type: .error, "[Categories][Response][Data]: \(result)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.categories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []
+                }
+            } else if case .failure(let error) = response {
+                Logger.log(type: .error, "[Categories][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     self?.displayMessage(error.description)
@@ -90,5 +131,4 @@ final class ChannelsListViewModel: ObservableObject {
             self?.toastMessage = ""
         }
     }
-    
 }

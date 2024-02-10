@@ -22,7 +22,7 @@ struct Episodes: Decodable {
 }
 
 struct EpisodesData: Decodable {
-    let mediaItems: [MediaItem]
+    let mediaItems: [MediaObject]
 
     enum CodingKeys: String, CodingKey {
         case mediaItems = "media"
@@ -30,11 +30,12 @@ struct EpisodesData: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        mediaItems = try values.decodeIfPresent([MediaItem].self, forKey: .mediaItems) ?? []
+        mediaItems = try values.decodeIfPresent([MediaObject].self, forKey: .mediaItems) ?? []
     }
 }
 
-struct MediaItem: Decodable {
+struct MediaObject: Decodable {
+    let id = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
     let type: String
     let name: String
     let coverAsset: CoverAsset?

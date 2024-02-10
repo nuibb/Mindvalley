@@ -52,4 +52,15 @@ extension URL {
             }
         }
     }
+    
+    func downloadImage() async throws -> UIImage {
+        let imageRequest = URLRequest(url: self)
+        let (data, imageResponse) = try await URLSession.shared.data(for: imageRequest)
+        guard let image = UIImage(data: data), (imageResponse as? HTTPURLResponse)?.statusCode == 200 else {
+            throw ImageDownloadError.badImage
+        }
+        Logger.log(type: .error, "[SAVE][IMAGE] Name: \(self.lastPathComponent)")
+        saveImage(image, name: self.lastPathComponent)
+        return image
+    }
 }

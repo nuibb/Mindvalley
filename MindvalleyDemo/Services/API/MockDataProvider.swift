@@ -26,7 +26,7 @@ class MockDataProvider: ChannelsDataProvider {
         }
     }
     
-    func fetchCategories() async -> Result<String, RequestError> {
+    func fetchCategories() async -> Swift.Result<CategoriesData, RequestError> {
         if self.networkMonitor.isConnected {
             return Bundle.main.decode("CategoriesData", fileExtension: ".json")
         } else {

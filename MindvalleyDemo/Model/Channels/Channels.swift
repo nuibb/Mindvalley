@@ -21,7 +21,7 @@ struct ChannelsData: Decodable {
 }
 
 struct ChannelsRawData: Decodable {
-    let channels: [ChannelItem]
+    let channels: [ChannelObject]
 
     enum CodingKeys: String, CodingKey {
         case channels = "channels"
@@ -29,12 +29,12 @@ struct ChannelsRawData: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        channels = try values.decodeIfPresent([ChannelItem].self, forKey: .channels) ?? []
+        channels = try values.decodeIfPresent([ChannelObject].self, forKey: .channels) ?? []
     }
 }
 
-struct ChannelItem: Decodable {
-    let id: String
+struct ChannelObject: Decodable {
+    let id: String = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
     let title: String
     let series: [Series]
     let mediaCount: Int
@@ -43,7 +43,6 @@ struct ChannelItem: Decodable {
     let coverAsset: CoverAsset?
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
         case title = "title"
         case series = "series"
         case mediaCount = "mediaCount"
@@ -54,7 +53,6 @@ struct ChannelItem: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(String.self, forKey: .id) ?? ""
         title = try values.decodeIfPresent(String.self, forKey: .title) ?? ""
         series = try values.decodeIfPresent([Series].self, forKey: .series) ?? []
         mediaCount = try values.decodeIfPresent(Int.self, forKey: .mediaCount) ?? 0
@@ -65,6 +63,7 @@ struct ChannelItem: Decodable {
 }
 
 struct Series: Decodable {
+    let id: String = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
     let name: String
     let coverAsset: CoverAsset?
 
@@ -82,6 +81,7 @@ struct Series: Decodable {
 
 
 struct LatestMediaItem: Decodable {
+    let id: String = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
     let type: String
     let name: String
     let coverAsset: CoverAsset?

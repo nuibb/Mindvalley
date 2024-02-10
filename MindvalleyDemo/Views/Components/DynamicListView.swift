@@ -20,9 +20,15 @@ struct DynamicListView<Content>: View where Content : View {
         if #available(iOS 14.0, *) {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(alignment: .leading, spacing: spacing, content: self.content)
+                    .background(Color.backgroundColor)
+                    .padding()
             }
         } else {
             List(content: self.content)
+                .hideIndicator()
+                .listStyle(.grouped)
+                .background(Color.backgroundColor)
+                .listRowBackground(Color.clear) ///For iOS 16, use .scrollContentBackground(.hidden) in case if you use List view
         }
     }
 }

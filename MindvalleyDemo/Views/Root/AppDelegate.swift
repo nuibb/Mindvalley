@@ -13,9 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        /// Defining server configuration domain on the current 'Schema' by the run time
-        Config.shared.setupServerConfiguration()
-        Logger.log(type: .info, "[Current][Environment]: \(Config.baseUrl ?? "Not Defined Yet")")
     
         /// Injecting dependency for defining data provider based on Schema...
         /// Mock data for local and API response for DEV/QA/DEMO/PROD environment.

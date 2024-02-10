@@ -15,13 +15,17 @@ struct EpisodeView: View {
         ForEach(episodes, id:\.id) { episode in
             VStack(alignment: .leading, spacing: 8) {
                 if !episode.coverPhoto.isEmpty {
-                    Image("pic")
-                        .imageModifier(width: size.width, height: size.height)
+                    if #available(iOS 15.0, *) {
+                        CacheAsyncImage(photoURL: episode.coverPhoto, size: size)
+                    } else {
+                        Image("pic")
+                            .imageModifier(width: size.width, height: size.height)
+                    }
                 }
                 
                 if !episode.title.isEmpty {
                     Text(episode.title)
-                        .font(.circular(.headline).bold())
+                        .font(.circular(.subheadline).bold())
                         .foregroundColor(Color.primaryColor)
                         .lineLimit(nil)
                         .multilineTextAlignment(.leading)

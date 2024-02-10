@@ -9,19 +9,14 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct MindvalleyDemoApp: App {
-    init() {
-        /// Defining server configuration domain on the current 'Schema' by the run time
-        Config.shared.setupServerConfiguration()
-        Logger.log(type: .info, "[Current][Environment]: \(Config.baseUrl ?? "Not Defined Yet")")
-    }
+    @StateObject var viewModel = ChannelsListViewModel(dataProvider: Config.shared.getDataProvider())
 
     var body: some Scene {
         WindowGroup {
             /// Injecting dependency for defining data provider based on Schema...
             /// Mock data for local and API response for DEV/QA/DEMO/PROD environment.
-            ChannelsListView(viewModel: ChannelsListViewModel(dataProvider: Config.shared.getDataProvider()))
+            ChannelsListView(viewModel: viewModel)
         }
     }
 }
-
 

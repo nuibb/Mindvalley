@@ -23,4 +23,12 @@ extension Image {
             .frame(width: width, height: height, alignment: .center)
             .clipShape(Circle())
     }
+    
+    func iconModifierFill(width: Double, height: Double) -> some View {
+        self
+            .resizable()
+            .scaledToFill()
+            .frame(width: width, height: height, alignment: .center)
+            .clipShape(Circle())
+    }
 }

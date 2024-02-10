@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DynamicHorizontalView<Content>: View where Content : View {
+struct DynamicHStackView<Content>: View where Content : View {
     let content: () -> Content
     let spacing: CGFloat?
     
@@ -20,8 +20,10 @@ struct DynamicHorizontalView<Content>: View where Content : View {
         ScrollView(.horizontal, showsIndicators: false) {
             if #available(iOS 14.0, *) {
                 LazyHStack(alignment: .top, spacing: spacing, content: self.content)
+                    .background(Color.backgroundColor)
             } else {
                 HStack(alignment: .top, spacing: spacing, content: self.content)
+                    .background(Color.backgroundColor)
             }
         }
     }
