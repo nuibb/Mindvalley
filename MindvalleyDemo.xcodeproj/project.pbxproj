@@ -21,6 +21,12 @@
 		5242E5222B77E12E00AAB889 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E5212B77E12E00AAB889 /* Categories.swift */; };
 		5242E52D2B77F20E00AAB889 /* DynamicGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E52C2B77F20E00AAB889 /* DynamicGridView.swift */; };
 		5242E52F2B77F86600AAB889 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E52E2B77F86600AAB889 /* CategoryView.swift */; };
+		5242E5332B78084700AAB889 /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E5322B78084700AAB889 /* BaseRepository.swift */; };
+		5242E5352B78087900AAB889 /* StorageStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E5342B78087900AAB889 /* StorageStatus.swift */; };
+		5242E5382B78090B00AAB889 /* PersistentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E5372B78090B00AAB889 /* PersistentController.swift */; };
+		5242E53B2B780A8700AAB889 /* MindvalleyDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5242E5392B780A8700AAB889 /* MindvalleyDemo.xcdatamodeld */; };
+		5242E53D2B780B8500AAB889 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E53C2B780B8500AAB889 /* StorageManager.swift */; };
+		5242E5402B7812C700AAB889 /* ChannelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242E53F2B7812C700AAB889 /* ChannelRepository.swift */; };
 		52457C332B726B2300A92FBA /* MindvalleyDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457C322B726B2300A92FBA /* MindvalleyDemoApp.swift */; };
 		52457C392B726B2400A92FBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52457C382B726B2400A92FBA /* Assets.xcassets */; };
 		52457C3C2B726B2400A92FBA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52457C3B2B726B2400A92FBA /* Preview Assets.xcassets */; };
@@ -55,6 +61,8 @@
 		52457CA92B7278D000A92FBA /* ApiDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CA82B7278D000A92FBA /* ApiDataProvider.swift */; };
 		52457CAB2B7278EA00A92FBA /* ChannelsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CAA2B7278EA00A92FBA /* ChannelsDataProvider.swift */; };
 		52457CAD2B72799100A92FBA /* MockDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CAC2B72799100A92FBA /* MockDataProvider.swift */; };
+		526D87CB2B788A100031C6F1 /* EpisodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */; };
+		526D87CD2B7890050031C6F1 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87CC2B7890050031C6F1 /* CategoryRepository.swift */; };
 		527A5BEC2B75B1C500D7EF98 /* ListAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A5BEB2B75B1C500D7EF98 /* ListAttributes.swift */; };
 		52980EB42B7457AE00F4C041 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52980EB32B7457AE00F4C041 /* Image.swift */; };
 		52980EB82B74877700F4C041 /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52980EB72B74877700F4C041 /* CacheAsyncImage.swift */; };
@@ -93,6 +101,12 @@
 		5242E5212B77E12E00AAB889 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		5242E52C2B77F20E00AAB889 /* DynamicGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicGridView.swift; sourceTree = "<group>"; };
 		5242E52E2B77F86600AAB889 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		5242E5322B78084700AAB889 /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
+		5242E5342B78087900AAB889 /* StorageStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStatus.swift; sourceTree = "<group>"; };
+		5242E5372B78090B00AAB889 /* PersistentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentController.swift; sourceTree = "<group>"; };
+		5242E53A2B780A8700AAB889 /* MindvalleyDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MindvalleyDemo.xcdatamodel; sourceTree = "<group>"; };
+		5242E53C2B780B8500AAB889 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		5242E53F2B7812C700AAB889 /* ChannelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRepository.swift; sourceTree = "<group>"; };
 		52457C2F2B726B2300A92FBA /* MindvalleyDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindvalleyDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52457C322B726B2300A92FBA /* MindvalleyDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindvalleyDemoApp.swift; sourceTree = "<group>"; };
 		52457C382B726B2400A92FBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -133,6 +147,8 @@
 		52457CAF2B7279FA00A92FBA /* EpisodesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EpisodesData.json; sourceTree = "<group>"; };
 		52457CB12B727A6D00A92FBA /* ChannelsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ChannelsData.json; sourceTree = "<group>"; };
 		52457CB22B727A9000A92FBA /* CategoriesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CategoriesData.json; sourceTree = "<group>"; };
+		526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeRepository.swift; sourceTree = "<group>"; };
+		526D87CC2B7890050031C6F1 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		527A5BEB2B75B1C500D7EF98 /* ListAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAttributes.swift; sourceTree = "<group>"; };
 		52980EB32B7457AE00F4C041 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		52980EB72B74877700F4C041 /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
@@ -193,6 +209,43 @@
 			path = Episode;
 			sourceTree = "<group>";
 		};
+		5242E5302B78036E00AAB889 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		5242E5312B78081600AAB889 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				5242E5362B7808DB00AAB889 /* Base */,
+				5242E53E2B78129000AAB889 /* Channels */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		5242E5362B7808DB00AAB889 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				5242E5372B78090B00AAB889 /* PersistentController.swift */,
+				5242E5322B78084700AAB889 /* BaseRepository.swift */,
+				5242E5342B78087900AAB889 /* StorageStatus.swift */,
+				5242E53C2B780B8500AAB889 /* StorageManager.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		5242E53E2B78129000AAB889 /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				5242E53F2B7812C700AAB889 /* ChannelRepository.swift */,
+				526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */,
+				526D87CC2B7890050031C6F1 /* CategoryRepository.swift */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
 		52457C262B726B2300A92FBA = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +273,7 @@
 				52457CA62B7278A200A92FBA /* Services */,
 				52457C942B72745400A92FBA /* Model */,
 				52457C862B72730500A92FBA /* Networking */,
+				5242E5312B78081600AAB889 /* Repositories */,
 				52457C732B72717900A92FBA /* Extensions */,
 				52457C6B2B726E4C00A92FBA /* Misc */,
 				52457C662B726DC900A92FBA /* Configs */,
@@ -438,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				52457CA72B7278BA00A92FBA /* API */,
+				5242E5302B78036E00AAB889 /* Storage */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -456,6 +511,7 @@
 			isa = PBXGroup;
 			children = (
 				52457C382B726B2400A92FBA /* Assets.xcassets */,
+				5242E5392B780A8700AAB889 /* MindvalleyDemo.xcdatamodeld */,
 				52457CAF2B7279FA00A92FBA /* EpisodesData.json */,
 				52457CB12B727A6D00A92FBA /* ChannelsData.json */,
 				52457CB22B727A9000A92FBA /* CategoriesData.json */,
@@ -603,18 +659,21 @@
 				52457CA52B72779500A92FBA /* Episodes.swift in Sources */,
 				52457C992B7274A000A92FBA /* Episode.swift in Sources */,
 				52457CAD2B72799100A92FBA /* MockDataProvider.swift in Sources */,
+				5242E5382B78090B00AAB889 /* PersistentController.swift in Sources */,
 				5242E51D2B77510700AAB889 /* DownloadError.swift in Sources */,
 				52980EBA2B7492EE00F4C041 /* EpisodeHeaderView.swift in Sources */,
 				52457C6A2B726DFC00A92FBA /* Logger.swift in Sources */,
 				52457CAB2B7278EA00A92FBA /* ChannelsDataProvider.swift in Sources */,
 				52457C932B7273FC00A92FBA /* ChannelsEndPoints.swift in Sources */,
 				52980EB42B7457AE00F4C041 /* Image.swift in Sources */,
+				526D87CD2B7890050031C6F1 /* CategoryRepository.swift in Sources */,
 				52980EFC2B751A0000F4C041 /* ChannelHeaderView.swift in Sources */,
 				52457C752B72719300A92FBA /* Bundle.swift in Sources */,
 				5242E52F2B77F86600AAB889 /* CategoryView.swift in Sources */,
 				52980EFA2B750A4600F4C041 /* ChannelView.swift in Sources */,
 				52457C812B72725800A92FBA /* View.swift in Sources */,
 				52457C652B726CAF00A92FBA /* ChannelsListViewModel.swift in Sources */,
+				5242E5352B78087900AAB889 /* StorageStatus.swift in Sources */,
 				52457C972B72748A00A92FBA /* Media.swift in Sources */,
 				52457C772B7271AD00A92FBA /* Color.swift in Sources */,
 				52457CA02B72755B00A92FBA /* TypeAdapter.swift in Sources */,
@@ -624,7 +683,9 @@
 				52457C852B7272D100A92FBA /* RoundedCorner.swift in Sources */,
 				52457C6E2B72712600A92FBA /* MessageType.swift in Sources */,
 				52457C632B726C8900A92FBA /* ChannelsListView.swift in Sources */,
+				5242E53B2B780A8700AAB889 /* MindvalleyDemo.xcdatamodeld in Sources */,
 				52457C8F2B7273B500A92FBA /* HttpMethod.swift in Sources */,
+				526D87CB2B788A100031C6F1 /* EpisodeRepository.swift in Sources */,
 				520925482B739D6500450DB0 /* MindvalleyDemoAppWrapper.swift in Sources */,
 				52457C9B2B7274B900A92FBA /* Channel.swift in Sources */,
 				52457C7D2B72721800A92FBA /* Font.swift in Sources */,
@@ -639,11 +700,14 @@
 				52457C8B2B72736B00A92FBA /* EndPoint.swift in Sources */,
 				52457C332B726B2300A92FBA /* MindvalleyDemoApp.swift in Sources */,
 				5209254C2B73A5F500450DB0 /* DynamicListView.swift in Sources */,
+				5242E5332B78084700AAB889 /* BaseRepository.swift in Sources */,
 				52457CA92B7278D000A92FBA /* ApiDataProvider.swift in Sources */,
 				52457C792B7271D800A92FBA /* Date.swift in Sources */,
 				52457C702B72714B00A92FBA /* NetworkMonitor.swift in Sources */,
 				52980EB82B74877700F4C041 /* CacheAsyncImage.swift in Sources */,
 				52457C722B72716000A92FBA /* Utils.swift in Sources */,
+				5242E53D2B780B8500AAB889 /* StorageManager.swift in Sources */,
+				5242E5402B7812C700AAB889 /* ChannelRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2042,6 +2106,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5242E5392B780A8700AAB889 /* MindvalleyDemo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5242E53A2B780A8700AAB889 /* MindvalleyDemo.xcdatamodel */,
+			);
+			currentVersion = 5242E53A2B780A8700AAB889 /* MindvalleyDemo.xcdatamodel */;
+			path = MindvalleyDemo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 52457C272B726B2300A92FBA /* Project object */;
 }

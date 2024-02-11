@@ -9,6 +9,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct MindvalleyDemoApp: App {
+    @StateObject static var persistentController = PersistentController()
     @StateObject var viewModel = ChannelsListViewModel(dataProvider: Config.shared.getDataProvider())
 
     var body: some Scene {

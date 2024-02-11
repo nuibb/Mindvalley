@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 //extension MediaObject: Episode {
 //    var id: String { UUID().uuidString }
@@ -37,3 +38,13 @@ import Foundation
 //    var title: String { name }
 //    var coverPhoto: String { coverAsset?.url ?? "" }
 //}
+
+
+extension Media {
+    func toMapItem<T: NSManagedObject>(cdMedia: CDMedia) -> T  {
+        cdMedia.id = id
+        cdMedia.title = title
+        cdMedia.coverPhoto = coverPhoto
+        return cdMedia as! T
+    }
+}

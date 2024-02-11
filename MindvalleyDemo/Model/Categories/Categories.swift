@@ -46,4 +46,9 @@ struct CategoryItem: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decodeIfPresent(String.self, forKey: .name) ?? ""
     }
+    
+    init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
 }
