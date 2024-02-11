@@ -22,37 +22,38 @@ struct Episodes: Decodable {
 }
 
 struct EpisodesData: Decodable {
-    let mediaItem: [MediaItem]
+    let mediaItems: [MediaObject]
 
     enum CodingKeys: String, CodingKey {
-        case mediaItem = "media"
+        case mediaItems = "media"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        mediaItem = try values.decodeIfPresent([MediaItem].self, forKey: .mediaItem) ?? []
+        mediaItems = try values.decodeIfPresent([MediaObject].self, forKey: .mediaItems) ?? []
     }
 }
 
-struct MediaItem: Decodable {
+struct MediaObject: Decodable {
+    let id = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
     let type: String
-    let title: String
+    let name: String
     let coverAsset: CoverAsset?
-    let channel: MediaChannel?
+    let mediaChannel: MediaChannel?
 
     enum CodingKeys: String, CodingKey {
         case type = "type"
         case title = "title"
         case coverAsset = "coverAsset"
-        case channel = "channel"
+        case mediaChannel = "channel"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         type = try values.decodeIfPresent(String.self, forKey: .type) ?? ""
-        title = try values.decodeIfPresent(String.self, forKey: .title) ?? ""
+        name = try values.decodeIfPresent(String.self, forKey: .title) ?? ""
         coverAsset = try values.decodeIfPresent(CoverAsset.self, forKey: .coverAsset)
-        channel = try values.decodeIfPresent(MediaChannel.self, forKey: .channel)
+        mediaChannel = try values.decodeIfPresent(MediaChannel.self, forKey: .mediaChannel)
     }
 }
 

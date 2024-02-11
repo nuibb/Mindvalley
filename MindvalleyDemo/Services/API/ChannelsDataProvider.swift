@@ -9,8 +9,8 @@ import Foundation
 
 protocol ChannelsDataProvider: HTTPClient {
     func fetchNewEpisodes() async -> Swift.Result<Episodes, RequestError>
-    func fetchChannels() async -> Swift.Result<String, RequestError>
-    func fetchCategories() async -> Swift.Result<String, RequestError>
+    func fetchChannels() async -> Swift.Result<ChannelsData, RequestError>
+    func fetchCategories() async -> Swift.Result<CategoriesData, RequestError>
 }
 
 extension ChannelsDataProvider {
@@ -22,17 +22,17 @@ extension ChannelsDataProvider {
         }
     }
     
-    func fetchChannels() async -> Swift.Result<String, RequestError> {
+    func fetchChannels() async -> Swift.Result<ChannelsData, RequestError> {
         if self.networkMonitor.isConnected {
-            return .failure(.networkNotAvailable)
+            return await getRequest(endpoint: ChannelsEndPoints.newEpisodes, responseModel: ChannelsData.self)
         } else {
             return .failure(.networkNotAvailable)
         }
     }
     
-    func fetchCategories() async -> Swift.Result<String, RequestError> {
+    func fetchCategories() async -> Swift.Result<CategoriesData, RequestError> {
         if self.networkMonitor.isConnected {
-            return .failure(.networkNotAvailable)
+            return await getRequest(endpoint: ChannelsEndPoints.categories, responseModel: CategoriesData.self)
         } else {
             return .failure(.networkNotAvailable)
         }

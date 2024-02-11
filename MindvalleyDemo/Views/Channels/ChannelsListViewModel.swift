@@ -12,38 +12,131 @@ final class ChannelsListViewModel: ObservableObject {
     @Published var messageColor: Color = MessageType.error.color
     @Published var isRequesting: Bool = false
     @Published var showToast: Bool = false
-    
-    let dataProvider: ChannelsDataProvider
+    @Published var newEpisodes: [EpisodeItem] = [] /// TODO:  later explore with [Episode] using adapter as generic
+    @Published var channels: [ChannelItem] = [] /// TODO: later explore with [Channel] using adapter
+    @Published var categories: [CategoryItem] = []
     var toastMessage: String = ""
-
-    init(dataProvider: ChannelsDataProvider) {
-        self.dataProvider = dataProvider
-        Utils.after(seconds: 1) {
+    
+    let remoteDataProvider: ChannelsDataProvider
+    let localDataProvider: StorageDataProvider
+    
+    init(remoteDataProvider: ChannelsDataProvider, localDataProvider: StorageDataProvider) {
+        self.remoteDataProvider = remoteDataProvider
+        self.localDataProvider = localDataProvider
+        
+        Utils.after(seconds: 1) { [weak self] in
+            guard let self = self else { return }
+            self.isRequesting = true //TODO: explore async group later to fetch all by group
             self.fetchNewEpisodes()
+            self.fetchChannels()
+            self.fetchCategories()
         }
     }
     
     func fetchNewEpisodes() {
-        self.isRequesting = true
-        
         Task { [weak self] in
             guard let self = self else { return }
-            let response = await dataProvider.fetchNewEpisodes()
-            if case .success(let data) = response {
-                Logger.log(type: .error, "[Response][Data]: \(data)")
-                DispatchQueue.main.async {
-                    self.isRequesting = false
+            let response = await remoteDataProvider.fetchNewEpisodes()
+            if case .success(let result) = response {
+                Logger.log(type: .error, "[Episodes][Response][Data]: \(result)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    let items = result.data?.mediaItems ?? []
+                    let filteredItems = items.count < 6 ? items : Array(items.prefix(6))
+                    self?.newEpisodes = filteredItems.map { item in
+                        return EpisodeItem(
+                            id: item.id,
+                            title: item.name,
+                            coverPhoto: item.coverAsset?.url ?? "",
+                            channel: item.mediaChannel?.title ?? "")
+                    }
+                    self?.addEpisodes()
                 }
             } else if case .failure(let error) = response {
-                Logger.log(type: .error, "[Request] failed: \(error.description)")
-                DispatchQueue.main.async {
-                    self.isRequesting = false
-                    self.displayMessage(error.description)
+                Logger.log(type: .error, "[Episodes][Request] failed: \(error.description)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    if error.description == RequestError.networkNotAvailable.description {
+                        self?.getEpisodes()
+                        return
+                    }
+                    self?.displayMessage(error.description)
                 }
             } else {
-                DispatchQueue.main.async {
-                    self.isRequesting = false
-                    self.displayMessage(RequestError.unknown.description)
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.displayMessage(RequestError.unknown.description)
+                }
+            }
+        }
+    }
+    
+    func fetchChannels() {
+        Task { [weak self] in
+            guard let self = self else { return }
+            let response = await remoteDataProvider.fetchChannels()
+            if case .success(let result) = response {
+                Logger.log(type: .error, "[Channels][Response][Data]: \(result)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.channels = result.rawData?.channels.map { channel in
+                        return ChannelItem(
+                            channelId: channel.id,
+                            name: channel.title,
+                            icon: channel.iconAsset?.thumbnailUrl ?? channel.coverAsset?.url ?? "",
+                            items: !channel.series.isEmpty ? channel.series.map {
+                                MediaItem(id: $0.id, title: $0.name, coverPhoto: $0.coverAsset?.url ?? "")
+                            } : channel.latestMediaItems.map {
+                                MediaItem(id: $0.id, title: $0.name, coverPhoto: $0.coverAsset?.url ?? "")
+                            },
+                            isSeries: !channel.series.isEmpty)
+                    } ?? []
+                    self?.addChannels()
+                }
+            } else if case .failure(let error) = response {
+                Logger.log(type: .error, "[Channels][Request] failed: \(error.description)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    if error.description == RequestError.networkNotAvailable.description {
+                        self?.getChannels()
+                        return
+                    }
+                    self?.displayMessage(error.description)
+                }
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.displayMessage(RequestError.unknown.description)
+                }
+            }
+        }
+    }
+    
+    func fetchCategories() {
+        Task { [weak self] in
+            guard let self = self else { return }
+            let response = await remoteDataProvider.fetchCategories()
+            if case .success(let result) = response {
+                Logger.log(type: .error, "[Categories][Response][Data]: \(result)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.categories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []
+                    self?.addCategories()
+                }
+            } else if case .failure(let error) = response {
+                Logger.log(type: .error, "[Categories][Request] failed: \(error.description)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    if error.description == RequestError.networkNotAvailable.description {
+                        self?.getCategories()
+                        return
+                    }
+                    self?.displayMessage(error.description)
+                }
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.isRequesting = false
+                    self?.displayMessage(RequestError.unknown.description)
                 }
             }
         }
@@ -52,9 +145,8 @@ final class ChannelsListViewModel: ObservableObject {
     private func displayMessage(_ msg: String) {
         toastMessage = msg
         showToast = true
-        Utils.after(seconds: 5.0) {
-            self.toastMessage = ""
+        Utils.after(seconds: 5.0) { [weak self] in
+            self?.toastMessage = ""
         }
     }
-    
 }

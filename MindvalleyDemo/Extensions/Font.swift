@@ -9,10 +9,10 @@ import SwiftUI
 
 extension Font {
     static func circular(_ style: UIFont.TextStyle) -> Font {
-        return Font.custom("CircularStd-Book", size: UIFont.preferredFont(forTextStyle: style).pointSize)
+        return Font.custom("Roboto-Regular", size: UIFont.preferredFont(forTextStyle: style).pointSize)
     }
 
     static func common() -> Font {
-        return Font.custom("CircularStd-Book", size: 14)
+        return Font.custom("Roboto-Regular", size: 14)
     }
 }

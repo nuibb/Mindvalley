@@ -46,7 +46,7 @@ struct Config {
     }
     
     /// Set the base url for the current environment on which the app is building on currently
-    func setupServerConfiguration() {
+    private func setupServerConfiguration() {
         #if LOCAL
         Config.baseUrl = BaseUrl.LOCAL.rawValue
         #elseif DEV
@@ -60,12 +60,20 @@ struct Config {
         #endif
     }
     
-    /// Data provider based on environment
-    func getDataProvider() -> ChannelsDataProvider {
+    /// Remote data provider based on environment
+    func getRemoteDataProvider() -> ChannelsDataProvider {
+        self.setupServerConfiguration()
+        
         #if LOCAL
         return MockDataProvider()
         #else
         return ApiDataProvider()
         #endif
     }
+    
+    /// Remote data provider based on environment
+    func getLocalDataProvider() -> StorageDataProvider {
+        return StorageDataProvider(context: PersistentStorage.shared.context)
+    }
+    
 }
