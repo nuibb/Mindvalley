@@ -40,16 +40,22 @@ struct CacheAsyncIcon: View {
     private let transaction = Transaction(animation: .spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.25))
 
     var body: some View {
-        AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
-            switch phase {
-            case .success(let image):
-                image.iconModifierFill(width: size.width, height: size.height)
-            case .failure(_):
-                Image(systemName: Constants.failedPhaseIcon).iconModifier(width: size.width, height: size.height)
-            case .empty:
-                Image(systemName: Constants.emptyPhaseIcon).iconModifier(width: size.width, height: size.height)
-            @unknown default:
-                ProgressView()
+        if let cachedUrl = URL(string: photoURL),
+            cachedUrl.checkIfFileExistsWith(name: photoURL),
+           let image = cachedUrl.loadImage(imageName: photoURL) {
+            Image(uiImage: image).iconModifierFill(width: size.width, height: size.height)
+        } else {
+            AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
+                switch phase {
+                case .success(let image):
+                    image.iconModifierFill(width: size.width, height: size.height)
+                case .failure(_):
+                    Image(systemName: Constants.failedPhaseIcon).iconModifier(width: size.width, height: size.height)
+                case .empty:
+                    Image(systemName: Constants.emptyPhaseIcon).iconModifier(width: size.width, height: size.height)
+                @unknown default:
+                    ProgressView()
+                }
             }
         }
     }
