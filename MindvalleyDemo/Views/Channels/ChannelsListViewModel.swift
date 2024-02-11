@@ -50,16 +50,12 @@ final class ChannelsListViewModel: ObservableObject {
                             coverPhoto: item.coverAsset?.url ?? "",
                             channel: item.mediaChannel?.title ?? "")
                     }
-                    self?.addEpisodes()
+                    //self?.addEpisodes()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Episodes][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    if error.description == RequestError.networkNotAvailable.description {
-                        self?.getEpisodes()
-                        return
-                    }
                     self?.displayMessage(error.description)
                 }
             } else {
@@ -91,16 +87,15 @@ final class ChannelsListViewModel: ObservableObject {
                             },
                             isSeries: !channel.series.isEmpty)
                     } ?? []
-                    self?.addChannels()
+                    //self?.addChannels()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Channels][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    if error.description == RequestError.networkNotAvailable.description {
-                        self?.getChannels()
-                        return
-                    }
+                    //if error.localizedDescription == RequestError.networkNotAvailable.description {
+                    //    self?.getChannels()
+                    //}
                     self?.displayMessage(error.description)
                 }
             } else {
@@ -121,16 +116,12 @@ final class ChannelsListViewModel: ObservableObject {
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     self?.categories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []
-                    self?.addCategories()
+                    //self?.addCategories()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Categories][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    if error.description == RequestError.networkNotAvailable.description {
-                        self?.getCategories()
-                        return
-                    }
                     self?.displayMessage(error.description)
                 }
             } else {
