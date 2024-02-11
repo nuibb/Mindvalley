@@ -5,17 +5,23 @@
 //  Created by Nurul Islam on 11/2/24.
 //
 
-import CoreData
 import Foundation
+import CoreData
 
-class PersistentController: ObservableObject {
-    let container = NSPersistentContainer(name: "MindvalleyDemo")
+final class PersistentStorage {
+    static let shared = PersistentStorage()
+    private init() {}
     
-    init() {
-        container.loadPersistentStores { description, error in
-            if let error = error {
-                Logger.log(type: .error, "[Persistent] failed: \(StorageStatus.loadingFailed.description) - \(error.localizedDescription)")
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "StorageDataModel")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-        }
-    }
+        })
+        return container
+    }()
+    
+    lazy var context = persistentContainer.viewContext
 }
+

@@ -41,7 +41,7 @@ import CoreData
 
 
 extension Media {
-    func toMapItem<T: NSManagedObject>(cdMedia: CDMedia) -> T  {
+    func toMap<T: NSManagedObject>(cdMedia: CDMedia) -> T  {
         cdMedia.id = id
         cdMedia.title = title
         cdMedia.coverPhoto = coverPhoto

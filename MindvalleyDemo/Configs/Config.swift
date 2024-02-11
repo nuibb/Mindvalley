@@ -60,8 +60,8 @@ struct Config {
         #endif
     }
     
-    /// Data provider based on environment
-    func getDataProvider() -> ChannelsDataProvider {
+    /// Remote data provider based on environment
+    func getRemoteDataProvider() -> ChannelsDataProvider {
         self.setupServerConfiguration()
         
         #if LOCAL
@@ -70,4 +70,10 @@ struct Config {
         return ApiDataProvider()
         #endif
     }
+    
+    /// Remote data provider based on environment
+    func getLocalDataProvider() -> StorageDataProvider {
+        return StorageDataProvider(context: PersistentStorage.shared.context)
+    }
+    
 }

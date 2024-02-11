@@ -13,12 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        
-        @ObservedObject var persistentController = PersistentController()
     
         /// Injecting dependency for defining data provider based on Schema...
         /// Mock data for local and API response for DEV/QA/DEMO/PROD environment.
-        @ObservedObject var viewModel = ChannelsListViewModel(dataProvider: Config.shared.getDataProvider())
+        @ObservedObject var viewModel = ChannelsListViewModel(
+            remoteDataProvider: Config.shared.getRemoteDataProvider(),
+            localDataProvider: Config.shared.getLocalDataProvider())
+        
         window.rootViewController = UIHostingController(rootView: ChannelsListView(viewModel: viewModel))
         
         self.window = window

@@ -9,51 +9,49 @@ import Foundation
 import CoreData
 
 protocol CategoryRepository: BaseRepository {
-    
+    func createCategory(record: T1) async -> StorageStatus
+    func fetchAllCategories() async -> [T1]
+    func fetchCategory(byIdentifier id: String) async -> T1?
+    func updateCategory(record: T1) async -> StorageStatus
+    func deleteCategory(byIdentifier id: String) async -> StorageStatus
 }
 
-struct CategoryDataRepository: CategoryRepository {
-    typealias T = CategoryItem
-    typealias T2 = CDCategory
-    private let manager: StorageManager
-    private var context: NSManagedObjectContext
+extension CategoryRepository {
+    typealias T = CDCategory
+    typealias T1 = CategoryItem
     
-    init(manager: StorageManager, context: NSManagedObjectContext) {
-        self.manager = manager
-        self.context = context
-    }
-    
-    func create(record: T) async -> StorageStatus {
+    @discardableResult
+    func createCategory(record: T1) -> StorageStatus {
         if getCDCategory(byId: record.id) != nil { return .existsInDB }
-        guard let cDCategory = await manager.create(T2.self) else { return .savingFailed }
+        guard let cDCategory = self.create(T.self) else { return .savingFailed }
         cDCategory.name = record.name
         
-        await manager.save()
+        self.saveContext()
         return .succeed
     }
     
-    func fetchAll() async -> [T] {
-        let results = await manager.fetch(T2.self)
-        var categories: [T] = []
+    func fetchAllCategories() async -> [T1] {
+        let results = await self.fetch(T.self)
+        var categories: [T1] = []
         results.forEach({ cdCategory in
             categories.append(convertToCategory(cdCategory: cdCategory))
         })
         return categories
     }
     
-    private func convertToCategory(cdCategory: T2) -> T {
-        return CategoryItem(id: cdCategory.id, name: cdCategory.name)
+    private func convertToCategory(cdCategory: T) -> T1 {
+        return CategoryItem(id: cdCategory.id ?? "", name: cdCategory.name ?? "")
     }
     
-    func fetch(byIdentifier id: String) async -> T? {
-        let fetchRequest = NSFetchRequest<T2>(entityName: "CDCategory")
+    func fetchCategory(byIdentifier id: String) async -> T1? {
+        let fetchRequest = NSFetchRequest<T>(entityName: "CDCategory")
         let predicate = NSPredicate(format: "id==%@", id as CVarArg)
         fetchRequest.predicate = predicate
         // let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
         // fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            let result = try await self.context.fetch(fetchRequest).first
+            let result = try self.context.fetch(fetchRequest).first
             guard let result = result else { return nil }
             return convertToCategory(cdCategory: result)
         } catch (let error) {
@@ -62,7 +60,7 @@ struct CategoryDataRepository: CategoryRepository {
         }
     }
     
-    func update(record: T) async -> StorageStatus {
+    func updateCategory(record: T1) async -> StorageStatus {
         //let predicate = NSPredicate(format: "(id = %@)", record.id as CVarArg)
         //let results = await manager.fetch(T2.self, with: predicate)
         
@@ -71,18 +69,18 @@ struct CategoryDataRepository: CategoryRepository {
         return .unknown
     }
     
-    func delete(byIdentifier id: String) async -> StorageStatus {
+    func deleteCategory(byIdentifier id: String) async -> StorageStatus {
         let cdCategory = getCDCategory(byId: id)
         guard let cdCategory = cdCategory else { return .notExistsInDB }
-        await manager.delete(object: cdCategory)
+        await self.delete(object: cdCategory)
         return .succeed
     }
     
-    private func getCDCategory(byId id: String) -> T2? {
-        let fetchRequest = NSFetchRequest<T2>(entityName: "CDCategory")
+    private func getCDCategory(byId id: String) -> T? {
+        let fetchRequest = NSFetchRequest<T>(entityName: "CDCategory")
         let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
         fetchRequest.predicate = fetchById
-        guard let result = try? await self.context.fetch(fetchRequest), let channel = result.first else { return nil }
+        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
         return channel
     }
 }

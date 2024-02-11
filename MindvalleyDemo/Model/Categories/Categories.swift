@@ -35,7 +35,7 @@ struct CategoriesRawData: Decodable {
 }
 
 struct CategoryItem: Decodable {
-    let id: String = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
+    var id: String = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
     let name : String
 
     enum CodingKeys: String, CodingKey {
