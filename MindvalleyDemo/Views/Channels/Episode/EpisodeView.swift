@@ -15,11 +15,16 @@ struct EpisodeView: View {
         ForEach(episodes, id:\.id) { episode in
             VStack(alignment: .leading, spacing: 8) {
                 if !episode.coverPhoto.isEmpty {
-                    if #available(iOS 15.0, *) {
-                        CacheAsyncImage(photoURL: episode.coverPhoto, size: size)
+                    if let cachedUrl = URL(string: episode.coverPhoto), let image = cachedUrl.loadImage() {
+                        /// TODO: Load it asynchronously from local for better performance
+                        Image(uiImage: image).imageModifier(size: size)
+                        
                     } else {
-                        Image("pic")
-                            .imageModifier(width: size.width, height: size.height)
+                        if #available(iOS 15.0, *) {/// Avoiding 3rd party library, doing everything in swiftUI
+                            CustomAsyncImage(photoURL: episode.coverPhoto, size: size, isIcon: false)
+                        } else {
+                            CacheWebImage(imageName: episode.coverPhoto, size: size)
+                        }
                     }
                 }
                 
