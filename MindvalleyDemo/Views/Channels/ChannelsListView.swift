@@ -32,6 +32,15 @@ struct ChannelsListView: View {
                     }
                 }
                 
+                if viewModel.newEpisodes.isEmpty && viewModel.channels.isEmpty && viewModel.categories.isEmpty {
+                    if !viewModel.isRequesting {
+                        Text("No Items Available!")
+                            .font(.circular(.callout))
+                            .foregroundColor(.red)
+                            .padding()
+                    }
+                }
+                
                 DynamicListView(spacing: 8) {
                     // MARK: New Episodes Section
                     if !viewModel.newEpisodes.isEmpty {
@@ -103,10 +112,10 @@ struct ChannelsListView: View {
                         .listRowBackgroundColor(Color.backgroundColor)
                     }
                 }
+                .showToast(isShowing: $viewModel.showToast, message: viewModel.toastMessage, color: viewModel.messageColor)
             }
             .background(Color.backgroundColor)
             .navigationBarTitle(Text(Constants.appTitle), displayMode: .large)
-            //.showToast(isShowing: $viewModel.showToast, message: viewModel.toastMessage, color: viewModel.messageColor)
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
