@@ -50,12 +50,16 @@ final class ChannelsListViewModel: ObservableObject {
                             coverPhoto: item.coverAsset?.url ?? "",
                             channel: item.mediaChannel?.title ?? "")
                     }
+                    
+                    // MARK: Insert into DB
                     //self?.addEpisodes()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Episodes][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
+                    
+                    // MARK: Fetching from local storage if internet unavailable
                     if error.description == RequestError.networkNotAvailable.description {
                         self?.getEpisodes()
                         return
@@ -91,12 +95,16 @@ final class ChannelsListViewModel: ObservableObject {
                             },
                             isSeries: !channel.series.isEmpty)
                     } ?? []
-                    //self?.addChannels()
+                    
+                    // MARK: Insert into DB
+                    self?.addChannels()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Channels][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
+                    
+                    // MARK: Fetching from local storage if internet unavailable
                     if error.description == RequestError.networkNotAvailable.description {
                         self?.getChannels()
                         return
@@ -121,12 +129,16 @@ final class ChannelsListViewModel: ObservableObject {
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     self?.categories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []
+                    
+                    // MARK: Insert into DB
                     //self?.addCategories()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Categories][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
+                    
+                    // MARK: Fetching from local storage if internet unavailable
                     if error.description == RequestError.networkNotAvailable.description {
                         self?.getCategories()
                         return
