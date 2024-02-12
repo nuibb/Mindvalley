@@ -21,15 +21,15 @@ extension EpisodeRepository {
     typealias T1 = EpisodeItem
     
     @discardableResult
-    func createEpisode(record: T1) -> StorageStatus {
-        if getCDEpisode(byId: record.id) != nil { return .existsInDB }
-        guard let cdEpisode = self.create(T.self) else { return .savingFailed }
+    func createEpisode(record: T1) async -> StorageStatus {
+        if await self.fetchEpisode(byIdentifier: record.id) != nil { return .existsInDB }
+        guard let cdEpisode = await self.create(T.self) else { return .savingFailed }
         cdEpisode.id = record.id
         cdEpisode.title = record.title
         cdEpisode.coverPhoto = record.coverPhoto
         cdEpisode.channel = record.channel
         
-        self.saveContext()
+        await self.save()
         return .succeed
     }
     
@@ -44,10 +44,10 @@ extension EpisodeRepository {
     
     private func convertToEpisode(cdEpisode: T) -> T1 {
         return EpisodeItem(
-            id: cdEpisode.id ?? "",
-            title: cdEpisode.title ?? "",
-            coverPhoto: cdEpisode.coverPhoto ?? "",
-            channel: cdEpisode.channel ?? "")
+            id: cdEpisode.id,
+            title: cdEpisode.title,
+            coverPhoto: cdEpisode.coverPhoto,
+            channel: cdEpisode.channel)
     }
     
     func fetchEpisode(byIdentifier id: String) async -> T1? {
@@ -77,18 +77,18 @@ extension EpisodeRepository {
     }
     
     func deleteEpisode(byIdentifier id: String) async -> StorageStatus {
-        let cdEpisode = getCDEpisode(byId: id)
-        guard let cdEpisode = cdEpisode else { return .notExistsInDB }
-        await self.delete(object: cdEpisode)
+        //        let cdEpisode = getCDEpisode(byId: id)
+        //        guard let cdEpisode = cdEpisode else { return .notExistsInDB }
+        //        await self.delete(object: cdEpisode)
         return .succeed
     }
     
-    private func getCDEpisode(byId id: String) -> T? {
-        let fetchRequest = NSFetchRequest<T>(entityName: "CDEpisode")
-        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
-        fetchRequest.predicate = fetchById
-        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
-        return channel
-    }
+    //    private func getCDEpisode(byId id: String) -> T? {
+    //        let fetchRequest = NSFetchRequest<T>(entityName: "CDEpisode")
+    //        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
+    //        fetchRequest.predicate = fetchById
+    //        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
+    //        return channel
+    //    }
 }
 

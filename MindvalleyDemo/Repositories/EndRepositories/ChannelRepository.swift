@@ -21,9 +21,9 @@ extension ChannelRepository {
     typealias T1 = ChannelItem
     
     @discardableResult
-    func createChannel(record: T1) -> StorageStatus {
-        if getCDChannel(byId: record.channelId) != nil { return .existsInDB }
-        guard let cdChannel = self.create(CDChannel.self) else { return .savingFailed }
+    func createChannel(record: T1) async -> StorageStatus {
+        if await self.fetchChannel(byIdentifier: record.channelId) != nil { return .existsInDB }
+        guard let cdChannel = await self.create(CDChannel.self) else { return .savingFailed }
         cdChannel.id = record.channelId
         cdChannel.name = record.name
         cdChannel.icon = record.icon
@@ -32,13 +32,13 @@ extension ChannelRepository {
         var mediaSet = Set<CDMedia>()
         
         record.items.forEach({ item in
-            guard let cdMedia = self.create(CDMedia.self) else { return }
+            guard let cdMedia = self.add(CDMedia.self) else { return }
             mediaSet.insert(item.toMap(cdMedia: cdMedia))
         })
         
         cdChannel.items = mediaSet
         
-        self.saveContext()
+        await self.save()
         return .succeed
     }
     
@@ -78,17 +78,17 @@ extension ChannelRepository {
     }
     
     func deleteChannel(byIdentifier id: String) async -> StorageStatus {
-        let cdChannel = getCDChannel(byId: id)
-        guard let cdChannel = cdChannel else { return .notExistsInDB }
-        await self.delete(object: cdChannel)
+        //        let cdChannel = getCDChannel(byId: id)
+        //        guard let cdChannel = cdChannel else { return .notExistsInDB }
+        //        await self.delete(object: cdChannel)
         return .succeed
     }
-    
-    private func getCDChannel(byId id: String) -> T? {
-        let fetchRequest = NSFetchRequest<T>(entityName: "CDChannel")
-        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
-        fetchRequest.predicate = fetchById
-        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
-        return channel
-    }
+    //
+    //    private func getCDChannel(byId id: String) -> T? {
+    //        let fetchRequest = NSFetchRequest<T>(entityName: "CDChannel")
+    //        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
+    //        fetchRequest.predicate = fetchById
+    //        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
+    //        return channel
+    //    }
 }

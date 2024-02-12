@@ -21,12 +21,12 @@ extension CategoryRepository {
     typealias T1 = CategoryItem
     
     @discardableResult
-    func createCategory(record: T1) -> StorageStatus {
-        if getCDCategory(byId: record.id) != nil { return .existsInDB }
-        guard let cDCategory = self.create(T.self) else { return .savingFailed }
+    func createCategory(record: T1) async -> StorageStatus {
+        if await self.fetchCategory(byIdentifier: record.id) != nil { return .existsInDB }
+        guard let cDCategory = await self.create(T.self) else { return .savingFailed }
         cDCategory.name = record.name
         
-        self.saveContext()
+        await self.save()
         return .succeed
     }
     
@@ -70,19 +70,19 @@ extension CategoryRepository {
     }
     
     func deleteCategory(byIdentifier id: String) async -> StorageStatus {
-        let cdCategory = getCDCategory(byId: id)
-        guard let cdCategory = cdCategory else { return .notExistsInDB }
-        await self.delete(object: cdCategory)
+        //        let cdCategory = getCDCategory(byId: id)
+        //        guard let cdCategory = cdCategory else { return .notExistsInDB }
+        //        await self.delete(object: cdCategory)
         return .succeed
     }
-    
-    private func getCDCategory(byId id: String) -> T? {
-        let fetchRequest = NSFetchRequest<T>(entityName: "CDCategory")
-        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
-        fetchRequest.predicate = fetchById
-        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
-        return channel
-    }
+    //
+    //    private func getCDCategory(byId id: String) -> T? {
+    //        let fetchRequest = NSFetchRequest<T>(entityName: "CDCategory")
+    //        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
+    //        fetchRequest.predicate = fetchById
+    //        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
+    //        return channel
+    //    }
 }
 
 

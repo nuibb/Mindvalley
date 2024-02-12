@@ -16,10 +16,10 @@ extension CDEpisode {
         return NSFetchRequest<CDEpisode>(entityName: "CDEpisode")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var title: String?
-    @NSManaged public var coverPhoto: String?
-    @NSManaged public var channel: String?
+    @NSManaged public var id: String
+    @NSManaged public var title: String
+    @NSManaged public var coverPhoto: String
+    @NSManaged public var channel: String
 
 }
 

@@ -56,6 +56,10 @@ final class ChannelsListViewModel: ObservableObject {
                 Logger.log(type: .error, "[Episodes][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
+                    if error.description == RequestError.networkNotAvailable.description {
+                        self?.getEpisodes()
+                        return
+                    }
                     self?.displayMessage(error.description)
                 }
             } else {
@@ -93,9 +97,10 @@ final class ChannelsListViewModel: ObservableObject {
                 Logger.log(type: .error, "[Channels][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    //if error.localizedDescription == RequestError.networkNotAvailable.description {
-                    //    self?.getChannels()
-                    //}
+                    if error.description == RequestError.networkNotAvailable.description {
+                        self?.getChannels()
+                        return
+                    }
                     self?.displayMessage(error.description)
                 }
             } else {
@@ -122,6 +127,10 @@ final class ChannelsListViewModel: ObservableObject {
                 Logger.log(type: .error, "[Categories][Request] failed: \(error.description)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
+                    if error.description == RequestError.networkNotAvailable.description {
+                        self?.getCategories()
+                        return
+                    }
                     self?.displayMessage(error.description)
                 }
             } else {

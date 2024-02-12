@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="CDCategory" representedClassName="CDCategory" syncable="YES">
-        <attribute name="id" attributeType="String" defaultValueString=""/>
-        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="name" attributeType="String" defaultValueString="&quot;&quot;"/>
     </entity>
     <entity name="CDChannel" representedClassName="CDChannel" syncable="YES">
-        <attribute name="icon" attributeType="String" defaultValueString=""/>
-        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <attribute name="icon" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
         <attribute name="isSeries" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String" defaultValueString=""/>
-        <relationship name="items" toMany="YES" deletionRule="Nullify" destinationEntity="CDMedia" inverseName="media" inverseEntity="CDMedia"/>
+        <attribute name="name" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDMedia" inverseName="media" inverseEntity="CDMedia"/>
     </entity>
     <entity name="CDEpisode" representedClassName="CDEpisode" syncable="YES">
-        <attribute name="channel" attributeType="String" defaultValueString=""/>
-        <attribute name="coverPhoto" attributeType="String" defaultValueString=""/>
-        <attribute name="id" attributeType="String" defaultValueString=""/>
-        <attribute name="title" attributeType="String" defaultValueString=""/>
+        <attribute name="channel" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="coverPhoto" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="title" attributeType="String" defaultValueString="&quot;&quot;"/>
     </entity>
     <entity name="CDMedia" representedClassName="CDMedia" syncable="YES">
-        <attribute name="coverPhoto" attributeType="String" defaultValueString=""/>
-        <attribute name="id" attributeType="String" defaultValueString=""/>
-        <attribute name="title" attributeType="String" defaultValueString=""/>
+        <attribute name="coverPhoto" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="title" attributeType="String" defaultValueString="&quot;&quot;"/>
         <relationship name="media" maxCount="1" deletionRule="Nullify" destinationEntity="CDChannel" inverseName="items" inverseEntity="CDChannel"/>
     </entity>
 </model>

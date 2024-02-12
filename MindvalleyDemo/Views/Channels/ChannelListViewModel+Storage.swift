@@ -14,7 +14,7 @@ extension ChannelsListViewModel {
         for episode in newEpisodes {
             Task { [weak self] in
                 guard let self = self else { return }
-                self.localDataProvider.createEpisode(record: episode)
+                await self.localDataProvider.createEpisode(record: episode)
             }
         }
     }
@@ -35,13 +35,20 @@ extension ChannelsListViewModel {
         for channel in channels {
             Task { [weak self] in
                 guard let self = self else { return }
-                self.localDataProvider.createChannel(record: channel)
+                await self.localDataProvider.createChannel(record: channel)
             }
         }
     }
     
     func getChannels() {
-        
+        Task { [weak self] in
+            guard let self = self else { return }
+            let channels = await self.localDataProvider.fetchAllChannels()
+            guard !channels.isEmpty else { return }
+            DispatchQueue.main.async { [weak self] in
+                self?.channels = channels
+            }
+        }
     }
     
     func addCategories() {
@@ -49,12 +56,19 @@ extension ChannelsListViewModel {
         for category in categories {
             Task { [weak self] in
                 guard let self = self else { return }
-                self.localDataProvider.createCategory(record: category)
+                await self.localDataProvider.createCategory(record: category)
             }
         }
     }
     
     func getCategories() {
-        
+        Task { [weak self] in
+            guard let self = self else { return }
+            let categories = await self.localDataProvider.fetchAllCategories()
+            guard !categories.isEmpty else { return }
+            DispatchQueue.main.async { [weak self] in
+                self?.categories = categories
+            }
+        }
     }
 }

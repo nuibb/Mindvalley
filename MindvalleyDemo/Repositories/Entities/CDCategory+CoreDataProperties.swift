@@ -16,8 +16,8 @@ extension CDCategory {
         return NSFetchRequest<CDCategory>(entityName: "CDCategory")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var id: String?
+    @NSManaged public var name: String
+    @NSManaged public var id: String
 
 }
 

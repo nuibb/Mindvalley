@@ -16,10 +16,10 @@ extension CDChannel {
         return NSFetchRequest<CDChannel>(entityName: "CDChannel")
     }
     
-    @NSManaged public var id: String?
-    @NSManaged public var name: String?
+    @NSManaged public var id: String
+    @NSManaged public var name: String
     @NSManaged public var isSeries: Bool
-    @NSManaged public var icon: String?
+    @NSManaged public var icon: String
     @NSManaged public var items: Set<CDMedia>?
     
 }
@@ -44,10 +44,10 @@ extension CDChannel {
 extension CDChannel : Identifiable {
     func convertToChannel() -> ChannelItem {
         return ChannelItem(
-            channelId: id ?? "",
-            name: name ?? "",
-            icon: icon ?? "",
-            items: [],
+            channelId: id,
+            name: name,
+            icon: icon,
+            items: convertToMediaItems(),
             isSeries: isSeries)
     }
     
