@@ -59,6 +59,7 @@
 		52457CA92B7278D000A92FBA /* ApiDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CA82B7278D000A92FBA /* ApiDataProvider.swift */; };
 		52457CAB2B7278EA00A92FBA /* ChannelsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CAA2B7278EA00A92FBA /* ChannelsDataProvider.swift */; };
 		52457CAD2B72799100A92FBA /* MockDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CAC2B72799100A92FBA /* MockDataProvider.swift */; };
+		5254575A2B7998120046C69A /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525457592B7998120046C69A /* Modifiers.swift */; };
 		526D87CB2B788A100031C6F1 /* EpisodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */; };
 		526D87CD2B7890050031C6F1 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87CC2B7890050031C6F1 /* CategoryRepository.swift */; };
 		526D87D32B78A9470031C6F1 /* StorageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526D87D12B78A9470031C6F1 /* StorageDataModel.xcdatamodeld */; };
@@ -72,7 +73,6 @@
 		526D87E42B78CDF30031C6F1 /* CDMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87E22B78CDF30031C6F1 /* CDMedia+CoreDataProperties.swift */; };
 		526D87E62B78D3AC0031C6F1 /* StorageDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87E52B78D3AC0031C6F1 /* StorageDataProvider.swift */; };
 		526D87E82B78EEF60031C6F1 /* ChannelListViewModel+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87E72B78EEF60031C6F1 /* ChannelListViewModel+Storage.swift */; };
-		527A5BEC2B75B1C500D7EF98 /* ListAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A5BEB2B75B1C500D7EF98 /* ListAttributes.swift */; };
 		52980EB42B7457AE00F4C041 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52980EB32B7457AE00F4C041 /* Image.swift */; };
 		52980EB82B74877700F4C041 /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52980EB72B74877700F4C041 /* CacheAsyncImage.swift */; };
 		52980EBA2B7492EE00F4C041 /* EpisodeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52980EB92B7492ED00F4C041 /* EpisodeHeaderView.swift */; };
@@ -154,6 +154,7 @@
 		52457CAF2B7279FA00A92FBA /* EpisodesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EpisodesData.json; sourceTree = "<group>"; };
 		52457CB12B727A6D00A92FBA /* ChannelsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ChannelsData.json; sourceTree = "<group>"; };
 		52457CB22B727A9000A92FBA /* CategoriesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CategoriesData.json; sourceTree = "<group>"; };
+		525457592B7998120046C69A /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeRepository.swift; sourceTree = "<group>"; };
 		526D87CC2B7890050031C6F1 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		526D87D22B78A9470031C6F1 /* StorageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StorageDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -167,7 +168,6 @@
 		526D87E22B78CDF30031C6F1 /* CDMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		526D87E52B78D3AC0031C6F1 /* StorageDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageDataProvider.swift; sourceTree = "<group>"; };
 		526D87E72B78EEF60031C6F1 /* ChannelListViewModel+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelListViewModel+Storage.swift"; sourceTree = "<group>"; };
-		527A5BEB2B75B1C500D7EF98 /* ListAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAttributes.swift; sourceTree = "<group>"; };
 		52980EB32B7457AE00F4C041 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		52980EB72B74877700F4C041 /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
 		52980EB92B7492ED00F4C041 /* EpisodeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeHeaderView.swift; sourceTree = "<group>"; };
@@ -369,7 +369,6 @@
 				520925512B73CB8D00450DB0 /* DynamicHStackView.swift */,
 				5209254B2B73A5F500450DB0 /* DynamicListView.swift */,
 				52980EB72B74877700F4C041 /* CacheAsyncImage.swift */,
-				527A5BEB2B75B1C500D7EF98 /* ListAttributes.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -414,6 +413,7 @@
 				52457C7E2B72723D00A92FBA /* String.swift */,
 				520925532B73D05900450DB0 /* URL.swift */,
 				52980EB32B7457AE00F4C041 /* Image.swift */,
+				525457592B7998120046C69A /* Modifiers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -688,7 +688,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				527A5BEC2B75B1C500D7EF98 /* ListAttributes.swift in Sources */,
 				526D87E32B78CDF30031C6F1 /* CDMedia+CoreDataClass.swift in Sources */,
 				5209254A2B739D8A00450DB0 /* AppDelegate.swift in Sources */,
 				52457C832B7272AD00A92FBA /* ToastView.swift in Sources */,
@@ -752,6 +751,7 @@
 				52457C722B72716000A92FBA /* Utils.swift in Sources */,
 				526D87DC2B78CD9F0031C6F1 /* CDCategory+CoreDataProperties.swift in Sources */,
 				5242E5402B7812C700AAB889 /* ChannelRepository.swift in Sources */,
+				5254575A2B7998120046C69A /* Modifiers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

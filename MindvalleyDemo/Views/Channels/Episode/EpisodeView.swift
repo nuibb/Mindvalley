@@ -16,10 +16,10 @@ struct EpisodeView: View {
             VStack(alignment: .leading, spacing: 8) {
                 if !episode.coverPhoto.isEmpty {
                     if #available(iOS 15.0, *) {
-                        CacheAsyncImage(photoURL: episode.coverPhoto, size: size)
+                        CustomAsyncImage(photoURL: episode.coverPhoto, size: size, isIcon: false)
                     } else {
                         Image("pic")
-                            .imageModifier(width: size.width, height: size.height)
+                            .imageModifier(size: size)
                     }
                 }
                 

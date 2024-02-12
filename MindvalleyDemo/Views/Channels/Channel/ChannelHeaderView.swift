@@ -15,10 +15,10 @@ struct ChannelHeaderView: View {
         HStack(alignment: .center, spacing: 16) {
             if !channel.icon.isEmpty {
                 if #available(iOS 15.0, *) {
-                    CacheAsyncIcon(photoURL: channel.icon, size: size)
+                    CustomAsyncImage(photoURL: channel.icon, size: size, isIcon: true)
                 } else {
                     Image("pic")
-                        .iconModifier(width: size.width, height: size.height)
+                        .iconModifier(size: size)
                 }
             }
             

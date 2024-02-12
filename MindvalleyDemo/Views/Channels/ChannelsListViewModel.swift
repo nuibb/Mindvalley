@@ -38,7 +38,7 @@ final class ChannelsListViewModel: ObservableObject {
             guard let self = self else { return }
             let response = await remoteDataProvider.fetchNewEpisodes()
             if case .success(let result) = response {
-                Logger.log(type: .error, "[Episodes][Response][Data]: \(result)")
+                //Logger.log(type: .error, "[Episodes][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     let items = result.data?.mediaItems ?? []
@@ -72,7 +72,7 @@ final class ChannelsListViewModel: ObservableObject {
             guard let self = self else { return }
             let response = await remoteDataProvider.fetchChannels()
             if case .success(let result) = response {
-                Logger.log(type: .error, "[Channels][Response][Data]: \(result)")
+                //Logger.log(type: .error, "[Channels][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     self?.channels = result.rawData?.channels.map { channel in
@@ -112,7 +112,7 @@ final class ChannelsListViewModel: ObservableObject {
             guard let self = self else { return }
             let response = await remoteDataProvider.fetchCategories()
             if case .success(let result) = response {
-                Logger.log(type: .error, "[Categories][Response][Data]: \(result)")
+                //Logger.log(type: .error, "[Categories][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
                     self?.categories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []

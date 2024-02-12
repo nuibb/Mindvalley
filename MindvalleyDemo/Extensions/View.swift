@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     func showToast(isShowing: Binding<Bool>, message: String, color: Color, duration: TimeInterval = 3) -> some View {
-        modifier(ToastModifier(isShowing: isShowing, message: message, color: color, duration: duration))
+        self.modifier(ToastModifier(isShowing: isShowing, message: message, color: color, duration: duration))
     }
     
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {

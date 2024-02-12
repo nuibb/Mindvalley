@@ -8,27 +8,27 @@
 import SwiftUI
 
 extension Image {
-    func imageModifier(width: Double, height: Double) -> some View {
+    func imageModifier(size: CGSize) -> some View {
         self
             .resizable()
             .scaledToFill()
-            .frame(width: width, height: height, alignment: .center)
+            .frame(width: size.width, height: size.height, alignment: .center)
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
     
-    func iconModifier(width: Double, height: Double) -> some View {
+    func iconModifier(size: CGSize) -> some View {
         self
             .resizable()
             .scaledToFit()
-            .frame(width: width, height: height, alignment: .center)
+            .frame(width: size.width, height: size.height, alignment: .center)
             .clipShape(Circle())
     }
     
-    func iconModifierFill(width: Double, height: Double) -> some View {
+    func iconModifierFill(size: CGSize) -> some View {
         self
             .resizable()
             .scaledToFill()
-            .frame(width: width, height: height, alignment: .center)
+            .frame(width: size.width, height: size.height, alignment: .center)
             .clipShape(Circle())
     }
 }

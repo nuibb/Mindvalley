@@ -1,8 +1,8 @@
 //
-//  HideListIndicator.swift
+//  Modifiers.swift
 //  MindvalleyDemo
 //
-//  Created by Nurul Islam on 9/2/24.
+//  Created by Nurul Islam on 12/2/24.
 //
 
 import SwiftUI
@@ -43,6 +43,21 @@ struct InsensitiveTextCase: ViewModifier {
             return AnyView(content.textCase(nil))
         } else {
             return content
+        }
+    }
+}
+
+struct IgnoringSafeAreaModifier: ViewModifier {
+    let edge: Edge.Set
+    let flag: Bool
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if flag {
+            content
+                .edgesIgnoringSafeArea(edge)
+        } else {
+            content
         }
     }
 }

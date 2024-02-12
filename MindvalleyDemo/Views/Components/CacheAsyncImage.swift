@@ -8,22 +8,30 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-struct CacheAsyncImage: View {
+struct CustomAsyncImage: View {
     let photoURL: String
     let size: CGSize
+    let isIcon: Bool
     
-    private let scale: CGFloat = 3.0
-    private let transaction = Transaction(animation: .spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.25))
-
+    init(photoURL: String, size: CGSize, isIcon: Bool) {
+        self.photoURL = photoURL
+        self.size = size
+        self.isIcon = isIcon
+    }
+    
     var body: some View {
-        AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
+        CacheAsyncImage(photoURL: photoURL, size: size, isIcon: isIcon) { phase in
             switch phase {
             case .success(let image):
-                image.imageModifier(width: size.width, height: size.height)
+                if !isIcon {
+                    image.imageModifier(size: size)
+                } else {
+                    image.iconModifierFill(size: size)
+                }
             case .failure(_):
-                Image(systemName: Constants.failedPhaseIcon).iconModifier(width: size.width, height: size.height)
+                Image(systemName: Constants.failedPhaseIcon).iconModifier(size: size)
             case .empty:
-                Image(systemName: Constants.emptyPhaseIcon).iconModifier(width: size.width, height: size.height)
+                Image(systemName: Constants.emptyPhaseIcon).iconModifier(size: size)
             @unknown default:
                 ProgressView()
             }
@@ -32,30 +40,51 @@ struct CacheAsyncImage: View {
 }
 
 @available(iOS 15.0, *)
-struct CacheAsyncIcon: View {
+struct CacheAsyncImage<Content>: View where Content: View {
     let photoURL: String
     let size: CGSize
+    let isIcon: Bool
+    let content: (AsyncImagePhase) -> Content
     
     private let scale: CGFloat = 3.0
     private let transaction = Transaction(animation: .spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.25))
-
+    
+    init(photoURL: String, size: CGSize, isIcon: Bool, @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
+        self.photoURL = photoURL
+        self.size = size
+        self.isIcon = isIcon
+        self.content = content
+    }
+    
     var body: some View {
-        if let cachedUrl = URL(string: photoURL),
-            cachedUrl.checkIfFileExistsWith(name: photoURL),
-           let image = cachedUrl.loadImage(imageName: photoURL) {
-            Image(uiImage: image).iconModifierFill(width: size.width, height: size.height)
+        if let cachedUrl = URL(string: photoURL), let image = cachedUrl.loadImage() {
+            if !isIcon {
+                Image(uiImage: image).imageModifier(size: size)
+            } else {
+                Image(uiImage: image).iconModifierFill(size: size)
+            }
         } else {
             AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
-                switch phase {
-                case .success(let image):
-                    image.iconModifierFill(width: size.width, height: size.height)
-                case .failure(_):
-                    Image(systemName: Constants.failedPhaseIcon).iconModifier(width: size.width, height: size.height)
-                case .empty:
-                    Image(systemName: Constants.emptyPhaseIcon).iconModifier(width: size.width, height: size.height)
-                @unknown default:
-                    ProgressView()
-                }
+                cacheAndRender(phase: phase)
+            }
+        }
+    }
+    
+    private func cacheAndRender(phase: AsyncImagePhase) -> some View {
+        if case .success(_) = phase {
+            if let imageURL = URL(string: photoURL) {
+                self.saveImage(imageURL)
+            }
+        }
+        return content(phase)
+    }
+    
+    private func saveImage(_ url: URL) {
+        Task {
+            do {
+                try await url.downloadImage()
+            } catch {
+                Logger.log(type: .error, "Image download failed with error: \(error)")
             }
         }
     }
