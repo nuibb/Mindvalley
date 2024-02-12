@@ -79,7 +79,7 @@ extension URL {
         guard let image = UIImage(data: data), (imageResponse as? HTTPURLResponse)?.statusCode == 200 else {
             throw ImageDownloadError.badImage
         }
-        Logger.log(type: .error, "[Download successful for: \(self.lastPathComponent)")
+        Logger.log(type: .info, "[Download successful for: \(self.lastPathComponent)")
         self.saveImageLocally(image)
     }
 }
