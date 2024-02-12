@@ -97,7 +97,7 @@ final class ChannelsListViewModel: ObservableObject {
                     } ?? []
                     
                     // MARK: Insert into DB
-                    self?.addChannels()
+                    //self?.addChannels()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Channels][Request] failed: \(error.description)")
