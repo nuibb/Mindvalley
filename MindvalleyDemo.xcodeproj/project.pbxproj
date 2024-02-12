@@ -60,6 +60,8 @@
 		52457CAB2B7278EA00A92FBA /* ChannelsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CAA2B7278EA00A92FBA /* ChannelsDataProvider.swift */; };
 		52457CAD2B72799100A92FBA /* MockDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52457CAC2B72799100A92FBA /* MockDataProvider.swift */; };
 		5254575A2B7998120046C69A /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525457592B7998120046C69A /* Modifiers.swift */; };
+		5254575D2B7A29B10046C69A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5254575C2B7A29B10046C69A /* SDWebImageSwiftUI */; };
+		5254575F2B7A319D0046C69A /* CacheWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5254575E2B7A319D0046C69A /* CacheWebImage.swift */; };
 		526D87CB2B788A100031C6F1 /* EpisodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */; };
 		526D87CD2B7890050031C6F1 /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D87CC2B7890050031C6F1 /* CategoryRepository.swift */; };
 		526D87D32B78A9470031C6F1 /* StorageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526D87D12B78A9470031C6F1 /* StorageDataModel.xcdatamodeld */; };
@@ -155,6 +157,7 @@
 		52457CB12B727A6D00A92FBA /* ChannelsData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ChannelsData.json; sourceTree = "<group>"; };
 		52457CB22B727A9000A92FBA /* CategoriesData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CategoriesData.json; sourceTree = "<group>"; };
 		525457592B7998120046C69A /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		5254575E2B7A319D0046C69A /* CacheWebImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheWebImage.swift; sourceTree = "<group>"; };
 		526D87CA2B788A100031C6F1 /* EpisodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeRepository.swift; sourceTree = "<group>"; };
 		526D87CC2B7890050031C6F1 /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
 		526D87D22B78A9470031C6F1 /* StorageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StorageDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -181,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5254575D2B7A29B10046C69A /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +372,7 @@
 				5242E52C2B77F20E00AAB889 /* DynamicGridView.swift */,
 				520925512B73CB8D00450DB0 /* DynamicHStackView.swift */,
 				5209254B2B73A5F500450DB0 /* DynamicListView.swift */,
+				5254575E2B7A319D0046C69A /* CacheWebImage.swift */,
 				52980EB72B74877700F4C041 /* CacheAsyncImage.swift */,
 			);
 			path = Components;
@@ -570,6 +575,9 @@
 			dependencies = (
 			);
 			name = MindvalleyDemo;
+			packageProductDependencies = (
+				5254575C2B7A29B10046C69A /* SDWebImageSwiftUI */,
+			);
 			productName = MindvalleyDemo;
 			productReference = 52457C2F2B726B2300A92FBA /* MindvalleyDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -643,6 +651,9 @@
 				"ms-MY",
 			);
 			mainGroup = 52457C262B726B2300A92FBA;
+			packageReferences = (
+				5254575B2B7A29B10046C69A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = 52457C302B726B2300A92FBA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -692,6 +703,7 @@
 				5209254A2B739D8A00450DB0 /* AppDelegate.swift in Sources */,
 				52457C832B7272AD00A92FBA /* ToastView.swift in Sources */,
 				52457CA52B72779500A92FBA /* Episodes.swift in Sources */,
+				5254575F2B7A319D0046C69A /* CacheWebImage.swift in Sources */,
 				52457C992B7274A000A92FBA /* Episode.swift in Sources */,
 				52457CAD2B72799100A92FBA /* MockDataProvider.swift in Sources */,
 				5242E5382B78090B00AAB889 /* PersistentController.swift in Sources */,
@@ -2150,6 +2162,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5254575B2B7A29B10046C69A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5254575C2B7A29B10046C69A /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5254575B2B7A29B10046C69A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		526D87D12B78A9470031C6F1 /* StorageDataModel.xcdatamodeld */ = {

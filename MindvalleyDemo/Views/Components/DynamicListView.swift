@@ -26,9 +26,8 @@ struct DynamicListView<Content>: View where Content : View {
         } else {
             List(content: self.content)
                 .hideIndicator()
-                .listStyle(.grouped)
-                .background(Color.backgroundColor)
-                .listRowBackground(Color.clear) ///For iOS 16, use .scrollContentBackground(.hidden) in case if you use List view
+                .listStyle(.plain)
+                .background(Color.backgroundColor) ///For iOS 16, use .scrollContentBackground(.hidden) in case if you use List view
         }
     }
 }

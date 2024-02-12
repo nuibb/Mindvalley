@@ -17,6 +17,10 @@ extension View {
     }
     
     // MARK: List Attributes
+    func listRowBackgroundColor(_ color: Color) -> some View {
+        self.modifier(ListRowBackgroundColorModifier(color: color))
+    }
+    
     func enableAutoKeyboardDismissal() -> some View {
         self.modifier(AutoKeyboardDismissal())
     }
@@ -35,5 +39,14 @@ extension View {
     
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    // MARK: View Attributes
+    func conditionalFrame(linesAllowed: Int) -> some View {
+        self.modifier(ConditionalFrameModifier(linesAllowed: linesAllowed))
+    }
+    
+    func ignoringSafeArea(to edge: Edge.Set, flag: Bool) -> some View {
+        self.modifier(IgnoringSafeAreaModifier(edge: edge, flag: flag))
     }
 }

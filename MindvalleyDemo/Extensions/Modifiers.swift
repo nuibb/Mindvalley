@@ -61,3 +61,33 @@ struct IgnoringSafeAreaModifier: ViewModifier {
         }
     }
 }
+
+struct ConditionalFrameModifier: ViewModifier {
+    let linesAllowed: Int
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if linesAllowed > 0 {
+            content
+                .frame(height: CGFloat(linesAllowed) * UIFont.preferredFont(forTextStyle: .body).lineHeight)
+                .fixedSize(horizontal: false, vertical: true)
+        } else {
+            content
+        }
+    }
+}
+
+struct ListRowBackgroundColorModifier: ViewModifier {
+    let color: Color
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+//        if #available(iOS 14, *) {
+//            content
+//        } else {
+            content
+                .listRowBackground(color)
+                .padding(.bottom, 8)
+       // }
+    }
+}

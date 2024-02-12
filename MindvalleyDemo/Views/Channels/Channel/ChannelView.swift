@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ChannelView: View {
     let channel: Channel
@@ -24,11 +25,16 @@ struct ChannelView: View {
         ForEach(channel.items.count < 6 ? channel.items : Array(channel.items.prefix(6)), id:\.id) { episode in
             VStack(alignment: .leading, spacing: 8) {
                 if !episode.coverPhoto.isEmpty {
-                    if #available(iOS 15.0, *) {
-                        CustomAsyncImage(photoURL: episode.coverPhoto, size: size, isIcon: false)
+                    if let cachedUrl = URL(string: episode.coverPhoto), let image = cachedUrl.loadImage(), episode.coverPhoto.isEmpty {
+                        /// TODO: Load it asynchronously from local for better performance
+                        Image(uiImage: image).imageModifier(size: size)
+                        
                     } else {
-                        Image("pic")
-                            .imageModifier(size: size)
+                        if #available(iOS 15.0, *) {/// Avoiding 3rd party library, doing everything in swiftUI
+                            CustomAsyncImage(photoURL: episode.coverPhoto, size: size, isIcon: false)
+                        } else {
+                            CacheWebImage(imageName: episode.coverPhoto, size: size)
+                        }
                     }
                 }
                 

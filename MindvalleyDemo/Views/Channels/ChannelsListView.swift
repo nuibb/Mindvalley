@@ -40,17 +40,20 @@ struct ChannelsListView: View {
                                 EpisodeView(episodes: viewModel.newEpisodes)
                             }
                         }
+                        .listRowBackgroundColor(Color.backgroundColor)
                     }
                     
                     
                     // MARK: Channels Sections
                     if !viewModel.channels.isEmpty {
                         ForEach(viewModel.channels, id:\.channelId) { channel in
-                            Spacer().frame(height: 8)
-                            Divider()
-                                .frame(height: 1)
-                                .background(Color.dividerColor)
-                                .padding(.bottom, 8)
+                            if #available(iOS 14.0, *) {
+                                Spacer().frame(height: 8)
+                                Divider()
+                                    .frame(height: 1)
+                                    .background(Color.dividerColor)
+                                    .padding(.bottom, 8)
+                            }
                             
                             Section(header: ChannelHeaderView(channel: channel)) {
                                 DynamicHStackView(spacing: 16) {
@@ -58,15 +61,19 @@ struct ChannelsListView: View {
                                 }
                             }
                         }
+                        .listRowBackgroundColor(Color.backgroundColor)
                     }
                     
                     // MARK: Categories Section
                     if !viewModel.categories.isEmpty {
-                        Spacer().frame(height: 8)
-                        Divider()
-                            .frame(height: 1)
-                            .background(Color.dividerColor)
-                            .padding(.bottom, 8)
+                        
+                        if #available(iOS 14.0, *) {
+                            Spacer().frame(height: 8)
+                            Divider()
+                                .frame(height: 1)
+                                .background(Color.dividerColor)
+                                .padding(.bottom, 8)
+                        }
                         
                         Section(header: EpisodeHeaderView(title: "Browse by categories")) {
                             if #available(iOS 14.0, *) {
@@ -76,8 +83,8 @@ struct ChannelsListView: View {
                                     }
                                 }
                                 .padding(.top, 8)
+                                
                             } else {
-                                Spacer().frame(height: 8)
                                 ForEach(viewModel.categories.indices, id:\.self) { index in
                                     if index % 2 == 1 {
                                         EmptyView()
@@ -93,6 +100,7 @@ struct ChannelsListView: View {
                                 }
                             }
                         }
+                        .listRowBackgroundColor(Color.backgroundColor)
                     }
                 }
             }
@@ -100,6 +108,7 @@ struct ChannelsListView: View {
             .navigationBarTitle(Text(Constants.appTitle), displayMode: .large)
             //.showToast(isShowing: $viewModel.showToast, message: viewModel.toastMessage, color: viewModel.messageColor)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

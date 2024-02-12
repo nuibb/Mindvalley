@@ -57,35 +57,24 @@ struct CacheAsyncImage<Content>: View where Content: View {
     }
     
     var body: some View {
-        if let cachedUrl = URL(string: photoURL), let image = cachedUrl.loadImage() {
-            if !isIcon {
-                Image(uiImage: image).imageModifier(size: size)
-            } else {
-                Image(uiImage: image).iconModifierFill(size: size)
-            }
-        } else {
-            AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
-                cacheAndRender(phase: phase)
-            }
+        AsyncImage(url: URL(string: photoURL), scale: scale, transaction: transaction) { phase in
+            cacheAndRender(phase: phase)
         }
     }
     
     private func cacheAndRender(phase: AsyncImagePhase) -> some View {
         if case .success(_) = phase {
             if let imageURL = URL(string: photoURL) {
-                self.saveImage(imageURL)
+                Task {
+                    do {
+                        /// Download and cache Image locally as `UIImage`
+                        try await imageURL.downloadImage()
+                    } catch {
+                        Logger.log(type: .error, "Image download failed with error: \(error)")
+                    }
+                }
             }
         }
         return content(phase)
-    }
-    
-    private func saveImage(_ url: URL) {
-        Task {
-            do {
-                try await url.downloadImage()
-            } catch {
-                Logger.log(type: .error, "Image download failed with error: \(error)")
-            }
-        }
     }
 }
