@@ -10,7 +10,7 @@ import CoreData
 
 final class PersistentStorage {
     static let shared = PersistentStorage()
-    private let queue = DispatchQueue(label: "com.example.PersistentStorageQueue")
+    private let queue = DispatchQueue(label: "com.mindValley.PersistentStorageQueue")
     
     private init() {}
     
@@ -19,7 +19,7 @@ final class PersistentStorage {
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 if isProduction {
-                    Logger.log(type: .info, "[Persistent][Storage][Save] failed: \(error.userInfo)")
+                    Logger.log(type: .error, "[Persistent][Storage][Save] failed: \(error.userInfo)")
                 } else {
                     fatalError("[Persistent][Storage][Save] failed: \(error), \(error.userInfo)")
                 }
@@ -36,11 +36,13 @@ final class PersistentStorage {
         queue.sync {
             if context.hasChanges {
                 do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
                     try context.save()
+                    Logger.log(type: .info, "[Persistent][Storage][Save] Succeed!")
                 } catch {
                     let error = error as NSError
                     if isProduction {
-                        Logger.log(type: .info, "[Persistent][Storage][Save] failed: \(error.userInfo)")
+                        Logger.log(type: .error, "[Persistent][Storage][Save] failed: \(error.userInfo)")
                     } else {
                         fatalError("[Persistent][Storage][Save] failed: \(error), \(error.userInfo)")
                     }
@@ -57,7 +59,7 @@ final class PersistentStorage {
             } catch {
                 let error = error as NSError
                 if isProduction {
-                    Logger.log(type: .info, "[Persistent][Storage][Save] failed: \(error.userInfo)")
+                    Logger.log(type: .error, "[Persistent][Storage][Save] failed: \(error.userInfo)")
                 } else {
                     fatalError("[Persistent][Storage][Save] failed: \(error), \(error.userInfo)")
                 }

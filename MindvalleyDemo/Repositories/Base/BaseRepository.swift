@@ -48,6 +48,7 @@ extension BaseRepository {
         await save()
     }
     
+    /// Perform complex or time-consuming operations on backgroundContext asynchronously
     func save() async {
         PersistentStorage.shared.performBackgroundTask { backgroundContext in
             do {
@@ -55,7 +56,7 @@ extension BaseRepository {
             } catch {
                 let error = error as NSError
                 if isProduction {
-                    Logger.log(type: .info, "[Persistent][Storage][Save] failed: \(error.userInfo)")
+                    Logger.log(type: .error, "[Persistent][Storage][Save] failed: \(error.userInfo)")
                 } else {
                     fatalError("[Persistent][Storage][Save] failed: \(error), \(error.userInfo)")
                 }
@@ -67,8 +68,6 @@ extension BaseRepository {
     }
     
     /// Perform complex or time-consuming operations on backgroundContext
-    /// For example, fetch data from a network, process it, and save it to the background context
-    /// Ensure to save changes to the background context
     func saveContext() {
         PersistentStorage.shared.performBackgroundTask { backgroundContext in
             do {

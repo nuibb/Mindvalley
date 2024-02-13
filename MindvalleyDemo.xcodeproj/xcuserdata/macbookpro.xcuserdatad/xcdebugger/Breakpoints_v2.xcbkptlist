@@ -3,4 +3,70 @@
    uuid = "EF08DC48-489F-45E6-ACBB-533BE126BF6E"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3222FF08-85DA-48CC-BB36-166F60ED47DC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MindvalleyDemo/Views/Channels/ChannelListViewModel+Storage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "getChannels()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38A5BC1F-F417-4220-B939-58F14DD661B5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MindvalleyDemo/Views/Channels/ChannelListViewModel+Storage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "getChannels()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "38A5BC1F-F417-4220-B939-58F14DD661B5 - 3e016aa2cc413ed0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #1 @Sendable () async -&gt; () in MindvalleyDemo.ChannelsListViewModel.getChannels() -&gt; ()"
+                  moduleName = "MindvalleyDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/Projects/Nuibb/iOS/MindvalleyDemo/MindvalleyDemo/Views/Channels/ChannelListViewModel+Storage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "584">
+               </Location>
+               <Location
+                  uuid = "38A5BC1F-F417-4220-B939-58F14DD661B5 - 3e016aa2cc413ed0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #1 @Sendable () async -&gt; () in MindvalleyDemo.ChannelsListViewModel.getChannels() -&gt; ()"
+                  moduleName = "MindvalleyDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbookpro/Projects/Nuibb/iOS/MindvalleyDemo/MindvalleyDemo/Views/Channels/ChannelListViewModel+Storage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "580">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -28,8 +28,6 @@ extension EpisodeRepository {
         cdEpisode.title = record.title
         cdEpisode.coverPhoto = record.coverPhoto
         cdEpisode.channel = record.channel
-        
-        await self.save()
         return .succeed
     }
     
@@ -37,17 +35,9 @@ extension EpisodeRepository {
         let results = await self.fetch(T.self)
         var episodes : [T1] = []
         results.forEach({ cdEpisode in
-            episodes.append(convertToEpisode(cdEpisode: cdEpisode))
+            episodes.append(cdEpisode.convertToEpisode())
         })
         return episodes
-    }
-    
-    private func convertToEpisode(cdEpisode: T) -> T1 {
-        return EpisodeItem(
-            id: cdEpisode.id,
-            title: cdEpisode.title,
-            coverPhoto: cdEpisode.coverPhoto,
-            channel: cdEpisode.channel)
     }
     
     func fetchEpisode(byIdentifier id: String) async -> T1? {
@@ -58,9 +48,9 @@ extension EpisodeRepository {
         // fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            let result = try self.context.fetch(fetchRequest).first
-            guard let result = result else { return nil }
-            return convertToEpisode(cdEpisode: result)
+            let result = try self.context.fetch(fetchRequest)
+            guard let category = result.first else { return nil }
+            return category.convertToEpisode()
         } catch (let error) {
             Logger.log(type: .error, "[CDEpisode][Response][Data]: failed \(error.localizedDescription)")
             return nil

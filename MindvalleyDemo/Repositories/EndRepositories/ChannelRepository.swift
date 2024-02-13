@@ -23,7 +23,7 @@ extension ChannelRepository {
     @discardableResult
     func createChannel(record: T1) async -> StorageStatus {
         if await self.fetchChannel(byIdentifier: record.channelId) != nil { return .existsInDB }
-        guard let cdChannel = await self.create(CDChannel.self) else { return .savingFailed }
+        guard let cdChannel = await self.create(CDChannel.self) else { return .addingFailed }
         cdChannel.id = record.channelId
         cdChannel.name = record.name
         cdChannel.icon = record.icon
@@ -31,14 +31,15 @@ extension ChannelRepository {
         
         var mediaSet = Set<CDMedia>()
         
-        record.items.forEach({ item in
-            guard let cdMedia = self.add(CDMedia.self) else { return }
-            mediaSet.insert(item.toMap(cdMedia: cdMedia))
-        })
+        for item in record.items {
+            guard let cdMedia = await self.create(CDMedia.self) else { return .addingFailed }
+            cdMedia.id = item.id
+            cdMedia.title = item.title
+            cdMedia.coverPhoto = item.coverPhoto
+            mediaSet.insert(cdMedia)
+        }
         
         cdChannel.items = mediaSet
-        
-        await self.save()
         return .succeed
     }
     
@@ -59,9 +60,9 @@ extension ChannelRepository {
         // fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            let result = try self.context.fetch(fetchRequest).first
-            guard let result = result else { return nil }
-            return result.convertToChannel()
+            let result = try self.context.fetch(fetchRequest)
+            guard let channel = result.first else { return nil }
+            return channel.convertToChannel()
         } catch (let error) {
             Logger.log(type: .error, "[CDChannel][Response][Data]: failed \(error.localizedDescription)")
             return nil

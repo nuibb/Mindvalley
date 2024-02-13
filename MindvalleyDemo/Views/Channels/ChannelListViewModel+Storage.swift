@@ -15,6 +15,7 @@ extension ChannelsListViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 await self.localDataProvider.createEpisode(record: episode)
+                await self.localDataProvider.save()
             }
         }
     }
@@ -36,6 +37,7 @@ extension ChannelsListViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 await self.localDataProvider.createChannel(record: channel)
+                await self.localDataProvider.save()
             }
         }
     }
@@ -47,6 +49,7 @@ extension ChannelsListViewModel {
             guard !channels.isEmpty else { return }
             DispatchQueue.main.async { [weak self] in
                 self?.channels = channels
+                Logger.log(type: .info, "[Channels][In][Storage] count: \(channels.count)")
             }
         }
     }
@@ -57,6 +60,7 @@ extension ChannelsListViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 await self.localDataProvider.createCategory(record: category)
+                await self.localDataProvider.save()
             }
         }
     }

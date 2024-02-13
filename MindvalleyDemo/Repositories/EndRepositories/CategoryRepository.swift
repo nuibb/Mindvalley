@@ -25,8 +25,6 @@ extension CategoryRepository {
         if await self.fetchCategory(byIdentifier: record.id) != nil { return .existsInDB }
         guard let cDCategory = await self.create(T.self) else { return .savingFailed }
         cDCategory.name = record.name
-        
-        await self.save()
         return .succeed
     }
     
@@ -34,13 +32,9 @@ extension CategoryRepository {
         let results = await self.fetch(T.self)
         var categories: [T1] = []
         results.forEach({ cdCategory in
-            categories.append(convertToCategory(cdCategory: cdCategory))
+            categories.append(cdCategory.convertToCategory())
         })
         return categories
-    }
-    
-    private func convertToCategory(cdCategory: T) -> T1 {
-        return CategoryItem(id: cdCategory.id ?? "", name: cdCategory.name ?? "")
     }
     
     func fetchCategory(byIdentifier id: String) async -> T1? {
@@ -51,9 +45,9 @@ extension CategoryRepository {
         // fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            let result = try self.context.fetch(fetchRequest).first
-            guard let result = result else { return nil }
-            return convertToCategory(cdCategory: result)
+            let result = try self.context.fetch(fetchRequest)
+            guard let category = result.first else { return nil }
+            return category.convertToCategory()
         } catch (let error) {
             Logger.log(type: .error, "[CDCategory][Response][Data]: failed \(error.localizedDescription)")
             return nil
