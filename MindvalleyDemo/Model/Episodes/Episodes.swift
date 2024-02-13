@@ -35,13 +35,14 @@ struct EpisodesData: Decodable {
 }
 
 struct MediaObject: Decodable {
-    let id = UUID().uuidString + "\(Double.random(in: -1.0e100..<1.0e100))" + UUID().uuidString
+    let id: String
     let type: String
     let name: String
     let coverAsset: CoverAsset?
     let mediaChannel: MediaChannel?
 
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case type = "type"
         case title = "title"
         case coverAsset = "coverAsset"
@@ -50,6 +51,7 @@ struct MediaObject: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decodeIfPresent(String.self, forKey: .id) ?? ""
         type = try values.decodeIfPresent(String.self, forKey: .type) ?? ""
         name = try values.decodeIfPresent(String.self, forKey: .title) ?? ""
         coverAsset = try values.decodeIfPresent(CoverAsset.self, forKey: .coverAsset)

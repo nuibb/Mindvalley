@@ -24,5 +24,11 @@ extension CDEpisode {
 }
 
 extension CDEpisode : Identifiable {
-
+    func convertToEpisode() -> EpisodeItem {
+        return EpisodeItem(
+            id: id,
+            title: title,
+            coverPhoto: coverPhoto,
+            channel: channel)
+    }
 }

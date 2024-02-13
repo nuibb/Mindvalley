@@ -23,8 +23,8 @@ struct ChannelHeaderView: View {
             }
             
             VStack(alignment: .leading, spacing: 4) {
-                if !channel.name.isEmpty {
-                    Text(channel.name)
+                if !channel.title.isEmpty {
+                    Text(channel.title)
                         .font(.circular(.headline).bold())
                         .foregroundColor(Color.primaryColor)
                         .lineLimit(1)

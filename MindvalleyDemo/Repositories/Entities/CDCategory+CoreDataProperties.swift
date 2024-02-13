@@ -22,5 +22,7 @@ extension CDCategory {
 }
 
 extension CDCategory : Identifiable {
-
+    func convertToCategory() -> CategoryItem {
+        return CategoryItem(id: id, name: name)
+    }
 }
