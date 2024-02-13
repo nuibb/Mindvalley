@@ -61,9 +61,10 @@ app.
 ## Answers to the following questions: 
 
 ### What parts of the test did you find challenging and why? 
-The most challenging part for me was to make this app multi-platform supported with minimum sdk support to iOS 13. I was facing challenges because SwiftUI has evolved and so many changes over the different versions of iOS SDK. To be compatible with all the versions from iOS 13, there were many issues that needed to resolve with the version compatible code in SwiftUI. These things were very difficult and time consuming to implement but eventually completed for all the versions and platforms.
+The most challenging part for me was to make this app multi-platform supported with minimum sdk support to iOS 13. I was facing challenges because SwiftUI has evolved and so many changes over the different versions of iOS SDK. To be compatible with all the versions from iOS 13, there were many issues that needed to resolve with the version compatible code in SwiftUI. These things were very difficult and time consuming to implement but eventually completed for all the versions and platforms. 
+    Another big challenge was to handle all the asynchronous call for downloading and caching images and data locally in multi threaded environment.
 
 ### What feature would you like to add in the future to improve the project?
 There can have many features to add here in this project like showing details view of each item and allowing user to read or watch the contents with subscription plan. Another important feature can be like localisation where user can see or view the contents in his/her own language.
 
-Also, the performance of this application can be improved in different ways over the time for presenting better user experiences over different features.
+Also, the performance of this application can be improved in different ways over the time for presenting better user experiences on different features.
