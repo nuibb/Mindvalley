@@ -10,6 +10,7 @@ import Foundation
 enum StorageStatus: Error, CustomStringConvertible {
     case succeed
     case savingFailed
+    case insertionFailed
     case loadingFailed
     case editingFailed
     case deletingFailed
@@ -23,6 +24,8 @@ enum StorageStatus: Error, CustomStringConvertible {
             return "Successfully done!"
         case .savingFailed:
             return "Failed to save in DB!"
+        case .insertionFailed:
+            return "Failed to insert in DB!"
         case .loadingFailed:
             return "Failed to load from DB!"
         case .editingFailed:

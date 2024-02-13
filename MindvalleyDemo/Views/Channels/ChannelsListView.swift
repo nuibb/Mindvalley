@@ -55,7 +55,7 @@ struct ChannelsListView: View {
                     
                     // MARK: Channels Sections
                     if !viewModel.channels.isEmpty {
-                        ForEach(viewModel.channels, id:\.channelId) { channel in
+                        ForEach(viewModel.channels, id:\.id) { channel in
                             if #available(iOS 14.0, *) {
                                 Spacer().frame(height: 8)
                                 Divider()

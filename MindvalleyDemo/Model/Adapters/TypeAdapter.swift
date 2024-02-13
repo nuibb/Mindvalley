@@ -38,13 +38,3 @@ import CoreData
 //    var title: String { name }
 //    var coverPhoto: String { coverAsset?.url ?? "" }
 //}
-
-
-extension Media {
-    func toMap<T: NSManagedObject>(cdMedia: CDMedia) -> T  {
-        cdMedia.id = id
-        cdMedia.title = title
-        cdMedia.coverPhoto = coverPhoto
-        return cdMedia as! T
-    }
-}
