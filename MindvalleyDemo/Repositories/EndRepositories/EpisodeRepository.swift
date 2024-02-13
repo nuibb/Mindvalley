@@ -22,8 +22,7 @@ extension EpisodeRepository {
     
     @discardableResult
     func createEpisode(record: T1) async -> StorageStatus {
-        if await self.fetchEpisode(byIdentifier: record.id) != nil { return .existsInDB }
-        guard let cdEpisode = await self.create(T.self) else { return .savingFailed }
+        guard let cdEpisode = await self.create(T.self) else { return .insertionFailed }
         cdEpisode.id = record.id
         cdEpisode.title = record.title
         cdEpisode.coverPhoto = record.coverPhoto
@@ -41,44 +40,32 @@ extension EpisodeRepository {
     }
     
     func fetchEpisode(byIdentifier id: String) async -> T1? {
-        let fetchRequest = NSFetchRequest<T>(entityName: "CDEpisode")
         let predicate = NSPredicate(format: "id==%@", id as CVarArg)
-        fetchRequest.predicate = predicate
-        // let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
-        // fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let result = try self.context.fetch(fetchRequest)
-            guard let category = result.first else { return nil }
-            return category.convertToEpisode()
-        } catch (let error) {
-            Logger.log(type: .error, "[CDEpisode][Response][Data]: failed \(error.localizedDescription)")
-            return nil
-        }
+        //let descriptors = [NSSortDescriptor(key: "channel", ascending: false)]
+        let results = await self.fetch(T.self, with: predicate)//sort: descriptors
+        guard let episode = results.first else { return nil }
+        return episode.convertToEpisode()
     }
     
     func updateEpisode(record: T1) async -> StorageStatus {
-        //let predicate = NSPredicate(format: "(id = %@)", record.id as CVarArg)
-        //let results = await manager.fetch(T2.self, with: predicate)
+        /*
+        let predicate = NSPredicate(format: "(id = %@)", record.id as CVarArg)
+        let results = await self.fetch(T.self, with: predicate)
         
-        //guard let cdEpisode = await manager.create(T2.self) else { return false}
-        //cdEpisode.id = record.id
-        return .unknown
-    }
-    
-    func deleteEpisode(byIdentifier id: String) async -> StorageStatus {
-        //        let cdEpisode = getCDEpisode(byId: id)
-        //        guard let cdEpisode = cdEpisode else { return .notExistsInDB }
-        //        await self.delete(object: cdEpisode)
+        guard let cdEpisode = await self.create(T.self) else { return .editingFailed }
+        cdEpisode.id = record.id
+         */
         return .succeed
     }
     
-    //    private func getCDEpisode(byId id: String) -> T? {
-    //        let fetchRequest = NSFetchRequest<T>(entityName: "CDEpisode")
-    //        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
-    //        fetchRequest.predicate = fetchById
-    //        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
-    //        return channel
-    //    }
+    @discardableResult
+    func deleteEpisode(byIdentifier id: String) async -> StorageStatus {
+        /*
+        let cdEpisode = getCDEpisode(byId: id)
+        guard let cdEpisode = cdEpisode else { return .notExistsInDB }
+        await self.delete(object: cdEpisode)
+        */
+        return .succeed
+    }
 }
 

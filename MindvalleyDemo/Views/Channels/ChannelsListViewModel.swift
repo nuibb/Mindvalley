@@ -43,16 +43,16 @@ final class ChannelsListViewModel: ObservableObject {
                     self?.isRequesting = false
                     let items = result.data?.mediaItems ?? []
                     let filteredItems = items.count < 6 ? items : Array(items.prefix(6))
-                    self?.newEpisodes = filteredItems.map { item in
+                    self?.newEpisodes = filteredItems.enumerated().map { (index, item) in
                         return EpisodeItem(
-                            id: item.id,
+                            id: String(index), ///handling missing id from API
                             title: item.name,
                             coverPhoto: item.coverAsset?.url ?? "",
                             channel: item.mediaChannel?.title ?? "")
                     }
                     
                     // MARK: Insert into DB
-                    //self?.addEpisodes()
+                    self?.addEpisodes()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Episodes][Request] failed: \(error.description)")
@@ -83,10 +83,10 @@ final class ChannelsListViewModel: ObservableObject {
                 //Logger.log(type: .info, "[Channels][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    self?.channels = result.rawData?.channels.map { channel in
+                    self?.channels = result.rawData?.channels.enumerated().map { (index, channel) in
                         return ChannelItem(
-                            channelId: channel.id,
-                            name: channel.title,
+                            id: String(index),/// handling missing id from API
+                            title: channel.title,
                             icon: channel.iconAsset?.thumbnailUrl ?? channel.coverAsset?.url ?? "",
                             items: !channel.series.isEmpty ? channel.series.map {
                                 MediaItem(id: $0.id, title: $0.name, coverPhoto: $0.coverAsset?.url ?? "")
@@ -128,10 +128,15 @@ final class ChannelsListViewModel: ObservableObject {
                 //Logger.log(type: .info, "[Categories][Response][Data]: \(result)")
                 DispatchQueue.main.async { [weak self] in
                     self?.isRequesting = false
-                    self?.categories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []
+                    let filteredCategories = result.rawData?.categories.filter { !$0.name.isEmpty } ?? []
+                    if !filteredCategories.isEmpty {
+                        self?.categories = filteredCategories.enumerated().map { (index, item) in
+                            CategoryItem(id: String(index), name: item.name)
+                        }
+                    }
                     
                     // MARK: Insert into DB
-                    //self?.addCategories()
+                    self?.addCategories()
                 }
             } else if case .failure(let error) = response {
                 Logger.log(type: .error, "[Categories][Request] failed: \(error.description)")

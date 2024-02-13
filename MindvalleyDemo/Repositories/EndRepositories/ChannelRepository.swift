@@ -22,17 +22,16 @@ extension ChannelRepository {
     
     @discardableResult
     func createChannel(record: T1) async -> StorageStatus {
-        if await self.fetchChannel(byIdentifier: record.channelId) != nil { return .existsInDB }
-        guard let cdChannel = await self.create(CDChannel.self) else { return .addingFailed }
-        cdChannel.id = record.channelId
-        cdChannel.name = record.name
+        guard let cdChannel = await self.create(CDChannel.self) else { return .insertionFailed }
+        cdChannel.id = record.id
+        cdChannel.name = record.title
         cdChannel.icon = record.icon
         cdChannel.isSeries = record.isSeries
         
         var mediaSet = Set<CDMedia>()
         
         for item in record.items {
-            guard let cdMedia = await self.create(CDMedia.self) else { return .addingFailed }
+            guard let cdMedia = await self.create(CDMedia.self) else { return .insertionFailed }
             cdMedia.id = item.id
             cdMedia.title = item.title
             cdMedia.coverPhoto = item.coverPhoto
@@ -53,20 +52,11 @@ extension ChannelRepository {
     }
     
     func fetchChannel(byIdentifier id: String) async -> T1? {
-        let fetchRequest = NSFetchRequest<T>(entityName: "CDChannel")
         let predicate = NSPredicate(format: "id==%@", id as CVarArg)
-        fetchRequest.predicate = predicate
-        // let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
-        // fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let result = try self.context.fetch(fetchRequest)
-            guard let channel = result.first else { return nil }
-            return channel.convertToChannel()
-        } catch (let error) {
-            Logger.log(type: .error, "[CDChannel][Response][Data]: failed \(error.localizedDescription)")
-            return nil
-        }
+        //let descriptors = [NSSortDescriptor(key: "channel", ascending: false)]
+        let results = await self.fetch(T.self, with: predicate)//sort: descriptors
+        guard let channel = results.first else { return nil }
+        return channel.convertToChannel()
     }
     
     func updateChannel(record: T1) async -> StorageStatus {
@@ -82,14 +72,6 @@ extension ChannelRepository {
         //        let cdChannel = getCDChannel(byId: id)
         //        guard let cdChannel = cdChannel else { return .notExistsInDB }
         //        await self.delete(object: cdChannel)
-        return .succeed
+        return .unknown
     }
-    //
-    //    private func getCDChannel(byId id: String) -> T? {
-    //        let fetchRequest = NSFetchRequest<T>(entityName: "CDChannel")
-    //        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
-    //        fetchRequest.predicate = fetchById
-    //        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
-    //        return channel
-    //    }
 }

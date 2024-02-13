@@ -44,8 +44,8 @@ extension CDChannel {
 extension CDChannel : Identifiable {
     func convertToChannel() -> ChannelItem {
         return ChannelItem(
-            channelId: id,
-            name: name,
+            id: id,
+            title: name,
             icon: icon,
             items: convertToMediaItems(),
             isSeries: isSeries)

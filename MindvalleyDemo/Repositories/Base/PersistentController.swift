@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-final class PersistentStorage {
+class PersistentStorage {
     static let shared = PersistentStorage()
     private let queue = DispatchQueue(label: "com.mindValley.PersistentStorageQueue")
     
@@ -52,16 +52,18 @@ final class PersistentStorage {
     }
     
     func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        persistentContainer.performBackgroundTask { (backgroundContext) in
-            block(backgroundContext)
-            do {
-                try backgroundContext.save()
-            } catch {
-                let error = error as NSError
-                if isProduction {
-                    Logger.log(type: .error, "[Persistent][Storage][Save] failed: \(error.userInfo)")
-                } else {
-                    fatalError("[Persistent][Storage][Save] failed: \(error), \(error.userInfo)")
+        queue.sync {
+            persistentContainer.performBackgroundTask { (backgroundContext) in
+                block(backgroundContext)
+                do {
+                    try backgroundContext.save()
+                } catch {
+                    let error = error as NSError
+                    if isProduction {
+                        Logger.log(type: .error, "[Persistent][Storage][Save] failed: \(error.userInfo)")
+                    } else {
+                        fatalError("[Persistent][Storage][Save] failed: \(error), \(error.userInfo)")
+                    }
                 }
             }
         }

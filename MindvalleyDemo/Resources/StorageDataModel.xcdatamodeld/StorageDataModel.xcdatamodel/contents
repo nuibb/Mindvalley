@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="CDCategory" representedClassName="CDCategory" syncable="YES">
-        <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
-        <attribute name="name" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
     </entity>
     <entity name="CDChannel" representedClassName="CDChannel" syncable="YES">
         <attribute name="icon" attributeType="String" defaultValueString=""/>
@@ -12,10 +12,10 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDMedia" inverseName="media" inverseEntity="CDMedia"/>
     </entity>
     <entity name="CDEpisode" representedClassName="CDEpisode" syncable="YES">
-        <attribute name="channel" attributeType="String" defaultValueString="&quot;&quot;"/>
-        <attribute name="coverPhoto" attributeType="String" defaultValueString="&quot;&quot;"/>
-        <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
-        <attribute name="title" attributeType="String" defaultValueString="&quot;&quot;"/>
+        <attribute name="channel" attributeType="String" defaultValueString=""/>
+        <attribute name="coverPhoto" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
     <entity name="CDMedia" representedClassName="CDMedia" syncable="YES">
         <attribute name="coverPhoto" attributeType="String" defaultValueString=""/>

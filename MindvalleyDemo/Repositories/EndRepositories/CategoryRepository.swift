@@ -22,8 +22,8 @@ extension CategoryRepository {
     
     @discardableResult
     func createCategory(record: T1) async -> StorageStatus {
-        if await self.fetchCategory(byIdentifier: record.id) != nil { return .existsInDB }
-        guard let cDCategory = await self.create(T.self) else { return .savingFailed }
+        guard let cDCategory = await self.create(T.self) else { return .insertionFailed }
+        cDCategory.id = record.id
         cDCategory.name = record.name
         return .succeed
     }
@@ -38,20 +38,11 @@ extension CategoryRepository {
     }
     
     func fetchCategory(byIdentifier id: String) async -> T1? {
-        let fetchRequest = NSFetchRequest<T>(entityName: "CDCategory")
         let predicate = NSPredicate(format: "id==%@", id as CVarArg)
-        fetchRequest.predicate = predicate
-        // let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
-        // fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let result = try self.context.fetch(fetchRequest)
-            guard let category = result.first else { return nil }
-            return category.convertToCategory()
-        } catch (let error) {
-            Logger.log(type: .error, "[CDCategory][Response][Data]: failed \(error.localizedDescription)")
-            return nil
-        }
+        //let descriptors = [NSSortDescriptor(key: "channel", ascending: false)]
+        let results = await self.fetch(T.self, with: predicate)//sort: descriptors
+        guard let category = results.first else { return nil }
+        return category.convertToCategory()
     }
     
     func updateCategory(record: T1) async -> StorageStatus {
@@ -69,14 +60,6 @@ extension CategoryRepository {
         //        await self.delete(object: cdCategory)
         return .succeed
     }
-    //
-    //    private func getCDCategory(byId id: String) -> T? {
-    //        let fetchRequest = NSFetchRequest<T>(entityName: "CDCategory")
-    //        let fetchById = NSPredicate(format: "id==%@", id as CVarArg)
-    //        fetchRequest.predicate = fetchById
-    //        guard let result = try? self.context.fetch(fetchRequest), let channel = result.first else { return nil }
-    //        return channel
-    //    }
 }
 
 
