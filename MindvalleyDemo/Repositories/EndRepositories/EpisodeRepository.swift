@@ -34,7 +34,7 @@ extension EpisodeRepository {
         let results = await self.fetch(T.self)
         var episodes : [T1] = []
         results.forEach({ cdEpisode in
-            episodes.append(cdEpisode.convertToEpisode())
+            episodes.append(cdEpisode)
         })
         return episodes
     }
@@ -44,7 +44,7 @@ extension EpisodeRepository {
         //let descriptors = [NSSortDescriptor(key: "channel", ascending: false)]
         let results = await self.fetch(T.self, with: predicate)//sort: descriptors
         guard let episode = results.first else { return nil }
-        return episode.convertToEpisode()
+        return episode
     }
     
     func updateEpisode(record: T1) async -> StorageStatus {

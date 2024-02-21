@@ -30,7 +30,7 @@ extension ChannelRepository {
         
         var mediaSet = Set<CDMedia>()
         
-        for item in record.items {
+        for item in record.episodes {
             guard let cdMedia = await self.create(CDMedia.self) else { return .insertionFailed }
             cdMedia.id = item.id
             cdMedia.title = item.title
@@ -44,9 +44,9 @@ extension ChannelRepository {
     
     func fetchAllChannels() async -> [T1] {
         let results = await self.fetch(T.self)
-        var channels : [T1] = []
+        var channels: [T1] = []
         results.forEach({ cdChannel in
-            channels.append(cdChannel.convertToChannel())
+            channels.append(cdChannel)
         })
         return channels
     }
@@ -56,7 +56,7 @@ extension ChannelRepository {
         //let descriptors = [NSSortDescriptor(key: "channel", ascending: false)]
         let results = await self.fetch(T.self, with: predicate)//sort: descriptors
         guard let channel = results.first else { return nil }
-        return channel.convertToChannel()
+        return channel
     }
     
     func updateChannel(record: T1) async -> StorageStatus {

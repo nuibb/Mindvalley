@@ -15,18 +15,17 @@ struct ChannelView: View {
     init(channel: Channel) {
         self.channel = channel
         if channel.isSeries {
-            self.size = CGSize(width: UIScreen.main.bounds.width - 48, height: 172)
+            self.size = CGSize(width: UIScreen.main.bounds.width - 70, height: 172)
         } else {
             self.size = CGSize(width: UIScreen.main.bounds.width/3, height: 228)
         }
     }
     
     var body: some View {
-        ForEach(channel.items.count < 6 ? channel.items : Array(channel.items.prefix(6)), id:\.id) { episode in
+        ForEach(channel.episodes.count < 6 ? channel.episodes : Array(channel.episodes.prefix(6)), id:\.id) { episode in
             VStack(alignment: .leading, spacing: 8) {
                 if !episode.coverPhoto.isEmpty {
                     if let cachedUrl = URL(string: episode.coverPhoto), let image = cachedUrl.loadImage() {
-                        /// TODO: Load it asynchronously from local for better performance
                         Image(uiImage: image).imageModifier(size: size)
                         
                     } else {

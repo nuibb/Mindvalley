@@ -23,8 +23,4 @@ extension CDMedia {
 
 }
 
-extension CDMedia : Identifiable {
-    func convertToMedia() -> Media {
-        return MediaItem(id: id, title: title, coverPhoto: coverPhoto)
-    }
-}
+extension CDMedia : Media {}

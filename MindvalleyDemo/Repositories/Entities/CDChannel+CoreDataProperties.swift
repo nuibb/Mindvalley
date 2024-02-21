@@ -41,21 +41,15 @@ extension CDChannel {
     
 }
 
-extension CDChannel : Identifiable {
-    func convertToChannel() -> Channel {
-        return ChannelItem(
-            id: id,
-            title: name,
-            icon: icon,
-            items: convertToMediaItems(),
-            isSeries: isSeries)
-    }
+extension CDChannel : Channel {
+    var title: String { name }
+    var episodes: [Media] { convertToMediaItems() }
     
     private func convertToMediaItems() -> [Media] {
         guard let mediaItems = items, !mediaItems.isEmpty else { return [] }
         var localItems: [Media] = []
         mediaItems.forEach({ cdMedia in
-            localItems.append(cdMedia.convertToMedia())
+            localItems.append(cdMedia)
         })
         return localItems
     }

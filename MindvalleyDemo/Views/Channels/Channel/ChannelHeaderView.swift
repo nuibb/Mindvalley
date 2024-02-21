@@ -31,7 +31,7 @@ struct ChannelHeaderView: View {
                         .multilineTextAlignment(.leading)
                 }
                 
-                Text("\(channel.items.count) Episodes".capitalized)
+                Text("\(channel.episodes.count) Episodes".capitalized)
                     .font(.circular(.subheadline).bold())
                     .foregroundColor(Color.textDarkGrey)
                     .lineLimit(1)

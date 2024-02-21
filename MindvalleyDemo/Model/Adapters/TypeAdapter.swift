@@ -17,7 +17,7 @@ extension ChannelObject: Channel {
     var icon: String {
         iconAsset?.thumbnailUrl ?? coverAsset?.url ?? ""
     }
-    var items: [Media] {
+    var episodes: [Media] {
         isSeries ? series : latestMediaItems
     }
     var isSeries: Bool { !self.series.isEmpty }
