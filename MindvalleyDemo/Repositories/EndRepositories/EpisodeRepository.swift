@@ -18,7 +18,7 @@ protocol EpisodeRepository: BaseRepository {
 
 extension EpisodeRepository {
     typealias T = CDEpisode
-    typealias T1 = EpisodeItem
+    typealias T1 = Episode
     
     @discardableResult
     func createEpisode(record: T1) async -> StorageStatus {

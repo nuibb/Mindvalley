@@ -42,7 +42,7 @@ extension CDChannel {
 }
 
 extension CDChannel : Identifiable {
-    func convertToChannel() -> ChannelItem {
+    func convertToChannel() -> Channel {
         return ChannelItem(
             id: id,
             title: name,

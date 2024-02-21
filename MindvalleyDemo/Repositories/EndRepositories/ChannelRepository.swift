@@ -18,7 +18,7 @@ protocol ChannelRepository: BaseRepository {
 
 extension ChannelRepository {
     typealias T = CDChannel
-    typealias T1 = ChannelItem
+    typealias T1 = Channel
     
     @discardableResult
     func createChannel(record: T1) async -> StorageStatus {

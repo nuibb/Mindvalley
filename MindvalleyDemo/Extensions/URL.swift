@@ -34,7 +34,7 @@ extension URL {
     }
 }
 
-// MARK: Image downloading and Saving
+// MARK: Image downloading and caching
 extension URL {
     func loadImage() -> UIImage? {
         guard let documentsDirectory = documentDirectoryPath() else { return nil }

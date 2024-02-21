@@ -82,12 +82,8 @@ struct ListRowBackgroundColorModifier: ViewModifier {
     
     @ViewBuilder
     func body(content: Content) -> some View {
-//        if #available(iOS 14, *) {
-//            content
-//        } else {
             content
                 .listRowBackground(color)
                 .padding(.bottom, 8)
-       // }
     }
 }
