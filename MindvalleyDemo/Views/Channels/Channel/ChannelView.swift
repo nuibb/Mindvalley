@@ -25,7 +25,7 @@ struct ChannelView: View {
         ForEach(channel.items.count < 6 ? channel.items : Array(channel.items.prefix(6)), id:\.id) { episode in
             VStack(alignment: .leading, spacing: 8) {
                 if !episode.coverPhoto.isEmpty {
-                    if let cachedUrl = URL(string: episode.coverPhoto), let image = cachedUrl.loadImage(), episode.coverPhoto.isEmpty {
+                    if let cachedUrl = URL(string: episode.coverPhoto), let image = cachedUrl.loadImage() {
                         /// TODO: Load it asynchronously from local for better performance
                         Image(uiImage: image).imageModifier(size: size)
                         
