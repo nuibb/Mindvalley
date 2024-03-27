@@ -390,10 +390,10 @@
 		52457C6B2B726E4C00A92FBA /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				52457C6C2B72710C00A92FBA /* Controls */,
 				52457C6F2B72714B00A92FBA /* NetworkMonitor.swift */,
 				52457C712B72716000A92FBA /* Utils.swift */,
 				5209254D2B73A76100450DB0 /* Constants.swift */,
+				52457C6C2B72710C00A92FBA /* Controls */,
 			);
 			path = Misc;
 			sourceTree = "<group>";

@@ -9,6 +9,12 @@ import Foundation
 
 let isProduction = Bundle.main.isProduction
 
+extension Optional where Wrapped == String {
+    var unwrapped: String {
+        return (self ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
 struct Logger {
     enum LogType: String, CustomStringConvertible {
         case debug = "🤖"

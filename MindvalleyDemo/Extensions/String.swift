@@ -7,12 +7,6 @@
 
 import Foundation
 
-extension Optional where Wrapped == String {
-    var unwrapped: String {
-        return (self ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-}
-
 extension String {
     func toDateFromTimezone() -> Date {
         let iso = ISO8601DateFormatter()
